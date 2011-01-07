@@ -30,30 +30,30 @@
       {
          this.statusStrip1 = new System.Windows.Forms.StatusStrip();
          this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+         this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.selectDirectoryInMyPicturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.selectDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
          this.aboutPicFaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.tabControlContacts = new System.Windows.Forms.TabControl();
          this.tabPage1 = new System.Windows.Forms.TabPage();
+         this.listBoxPersonsFound = new System.Windows.Forms.ListBox();
+         this.pictureBoxPreview = new System.Windows.Forms.PictureBox();
+         this.listBoxFiles = new System.Windows.Forms.ListBox();
+         this.textBoxDirectory = new System.Windows.Forms.TextBox();
+         this.labelDirectory = new System.Windows.Forms.Label();
          this.tabPageContacts = new System.Windows.Forms.TabPage();
          this.labelContactNb = new System.Windows.Forms.Label();
          this.labelContactInfo = new System.Windows.Forms.Label();
          this.listBoxContacts = new System.Windows.Forms.ListBox();
          this.buttonRefreshContacts = new System.Windows.Forms.Button();
          this.labelContactsFile = new System.Windows.Forms.Label();
-         this.labelDirectory = new System.Windows.Forms.Label();
-         this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-         this.selectDirectoryInMyPicturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-         this.selectDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-         this.textBoxDirectory = new System.Windows.Forms.TextBox();
-         this.listBoxFiles = new System.Windows.Forms.ListBox();
-         this.pictureBoxPreview = new System.Windows.Forms.PictureBox();
-         this.listBoxPersonsFound = new System.Windows.Forms.ListBox();
          this.menuStrip1.SuspendLayout();
          this.tabControlContacts.SuspendLayout();
          this.tabPage1.SuspendLayout();
-         this.tabPageContacts.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
+         this.tabPageContacts.SuspendLayout();
          this.SuspendLayout();
          // 
          // statusStrip1
@@ -74,6 +74,29 @@
          this.menuStrip1.Size = new System.Drawing.Size(664, 24);
          this.menuStrip1.TabIndex = 2;
          this.menuStrip1.Text = "menuStrip1";
+         // 
+         // fileToolStripMenuItem
+         // 
+         this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectDirectoryInMyPicturesToolStripMenuItem,
+            this.selectDirectoryToolStripMenuItem});
+         this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+         this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+         this.fileToolStripMenuItem.Text = "File";
+         // 
+         // selectDirectoryInMyPicturesToolStripMenuItem
+         // 
+         this.selectDirectoryInMyPicturesToolStripMenuItem.Name = "selectDirectoryInMyPicturesToolStripMenuItem";
+         this.selectDirectoryInMyPicturesToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+         this.selectDirectoryInMyPicturesToolStripMenuItem.Text = "Select Directory in \"My Pictures\"";
+         this.selectDirectoryInMyPicturesToolStripMenuItem.Click += new System.EventHandler(this.selectDirectoryInMyPicturesToolStripMenuItem_Click);
+         // 
+         // selectDirectoryToolStripMenuItem
+         // 
+         this.selectDirectoryToolStripMenuItem.Name = "selectDirectoryToolStripMenuItem";
+         this.selectDirectoryToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+         this.selectDirectoryToolStripMenuItem.Text = "Select Directory";
+         this.selectDirectoryToolStripMenuItem.Click += new System.EventHandler(this.selectDirectoryToolStripMenuItem_Click);
          // 
          // toolStripMenuItem1
          // 
@@ -114,6 +137,62 @@
          this.tabPage1.TabIndex = 0;
          this.tabPage1.Text = "tabPage1";
          this.tabPage1.UseVisualStyleBackColor = true;
+         // 
+         // listBoxPersonsFound
+         // 
+         this.listBoxPersonsFound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.listBoxPersonsFound.FormattingEnabled = true;
+         this.listBoxPersonsFound.Location = new System.Drawing.Point(178, 361);
+         this.listBoxPersonsFound.MultiColumn = true;
+         this.listBoxPersonsFound.Name = "listBoxPersonsFound";
+         this.listBoxPersonsFound.Size = new System.Drawing.Size(226, 56);
+         this.listBoxPersonsFound.Sorted = true;
+         this.listBoxPersonsFound.TabIndex = 4;
+         this.listBoxPersonsFound.SelectedIndexChanged += new System.EventHandler(this.listBoxPersonsFound_SelectedIndexChanged);
+         // 
+         // pictureBoxPreview
+         // 
+         this.pictureBoxPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                     | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.pictureBoxPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+         this.pictureBoxPreview.Location = new System.Drawing.Point(178, 39);
+         this.pictureBoxPreview.Name = "pictureBoxPreview";
+         this.pictureBoxPreview.Size = new System.Drawing.Size(470, 316);
+         this.pictureBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+         this.pictureBoxPreview.TabIndex = 3;
+         this.pictureBoxPreview.TabStop = false;
+         this.pictureBoxPreview.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPreview_MouseMove);
+         // 
+         // listBoxFiles
+         // 
+         this.listBoxFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                     | System.Windows.Forms.AnchorStyles.Left)));
+         this.listBoxFiles.FormattingEnabled = true;
+         this.listBoxFiles.Location = new System.Drawing.Point(10, 39);
+         this.listBoxFiles.Name = "listBoxFiles";
+         this.listBoxFiles.Size = new System.Drawing.Size(162, 381);
+         this.listBoxFiles.Sorted = true;
+         this.listBoxFiles.TabIndex = 2;
+         this.listBoxFiles.SelectedIndexChanged += new System.EventHandler(this.listBoxFiles_SelectedIndexChanged);
+         // 
+         // textBoxDirectory
+         // 
+         this.textBoxDirectory.Location = new System.Drawing.Point(65, 13);
+         this.textBoxDirectory.Name = "textBoxDirectory";
+         this.textBoxDirectory.ReadOnly = true;
+         this.textBoxDirectory.Size = new System.Drawing.Size(583, 20);
+         this.textBoxDirectory.TabIndex = 1;
+         // 
+         // labelDirectory
+         // 
+         this.labelDirectory.AutoSize = true;
+         this.labelDirectory.Location = new System.Drawing.Point(7, 16);
+         this.labelDirectory.Name = "labelDirectory";
+         this.labelDirectory.Size = new System.Drawing.Size(52, 13);
+         this.labelDirectory.TabIndex = 0;
+         this.labelDirectory.Text = "Directory:";
          // 
          // tabPageContacts
          // 
@@ -185,83 +264,6 @@
          this.labelContactsFile.TabIndex = 0;
          this.labelContactsFile.Text = "label1";
          // 
-         // labelDirectory
-         // 
-         this.labelDirectory.AutoSize = true;
-         this.labelDirectory.Location = new System.Drawing.Point(7, 16);
-         this.labelDirectory.Name = "labelDirectory";
-         this.labelDirectory.Size = new System.Drawing.Size(52, 13);
-         this.labelDirectory.TabIndex = 0;
-         this.labelDirectory.Text = "Directory:";
-         // 
-         // fileToolStripMenuItem
-         // 
-         this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectDirectoryInMyPicturesToolStripMenuItem,
-            this.selectDirectoryToolStripMenuItem});
-         this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-         this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-         this.fileToolStripMenuItem.Text = "File";
-         // 
-         // selectDirectoryInMyPicturesToolStripMenuItem
-         // 
-         this.selectDirectoryInMyPicturesToolStripMenuItem.Name = "selectDirectoryInMyPicturesToolStripMenuItem";
-         this.selectDirectoryInMyPicturesToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
-         this.selectDirectoryInMyPicturesToolStripMenuItem.Text = "Select Directory in \"My Pictures\"";
-         this.selectDirectoryInMyPicturesToolStripMenuItem.Click += new System.EventHandler(this.selectDirectoryInMyPicturesToolStripMenuItem_Click);
-         // 
-         // selectDirectoryToolStripMenuItem
-         // 
-         this.selectDirectoryToolStripMenuItem.Name = "selectDirectoryToolStripMenuItem";
-         this.selectDirectoryToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
-         this.selectDirectoryToolStripMenuItem.Text = "Select Directory";
-         this.selectDirectoryToolStripMenuItem.Click += new System.EventHandler(this.selectDirectoryToolStripMenuItem_Click);
-         // 
-         // textBoxDirectory
-         // 
-         this.textBoxDirectory.Location = new System.Drawing.Point(65, 13);
-         this.textBoxDirectory.Name = "textBoxDirectory";
-         this.textBoxDirectory.ReadOnly = true;
-         this.textBoxDirectory.Size = new System.Drawing.Size(583, 20);
-         this.textBoxDirectory.TabIndex = 1;
-         // 
-         // listBoxFiles
-         // 
-         this.listBoxFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)));
-         this.listBoxFiles.FormattingEnabled = true;
-         this.listBoxFiles.Location = new System.Drawing.Point(10, 39);
-         this.listBoxFiles.Name = "listBoxFiles";
-         this.listBoxFiles.Size = new System.Drawing.Size(162, 381);
-         this.listBoxFiles.Sorted = true;
-         this.listBoxFiles.TabIndex = 2;
-         this.listBoxFiles.SelectedIndexChanged += new System.EventHandler(this.listBoxFiles_SelectedIndexChanged);
-         // 
-         // pictureBoxPreview
-         // 
-         this.pictureBoxPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
-         this.pictureBoxPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-         this.pictureBoxPreview.Location = new System.Drawing.Point(178, 39);
-         this.pictureBoxPreview.Name = "pictureBoxPreview";
-         this.pictureBoxPreview.Size = new System.Drawing.Size(470, 316);
-         this.pictureBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-         this.pictureBoxPreview.TabIndex = 3;
-         this.pictureBoxPreview.TabStop = false;
-         // 
-         // listBoxPersonsFound
-         // 
-         this.listBoxPersonsFound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
-         this.listBoxPersonsFound.FormattingEnabled = true;
-         this.listBoxPersonsFound.Location = new System.Drawing.Point(178, 361);
-         this.listBoxPersonsFound.MultiColumn = true;
-         this.listBoxPersonsFound.Name = "listBoxPersonsFound";
-         this.listBoxPersonsFound.Size = new System.Drawing.Size(470, 56);
-         this.listBoxPersonsFound.Sorted = true;
-         this.listBoxPersonsFound.TabIndex = 4;
-         // 
          // FormMain
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -280,9 +282,9 @@
          this.tabControlContacts.ResumeLayout(false);
          this.tabPage1.ResumeLayout(false);
          this.tabPage1.PerformLayout();
+         ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
          this.tabPageContacts.ResumeLayout(false);
          this.tabPageContacts.PerformLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();
 

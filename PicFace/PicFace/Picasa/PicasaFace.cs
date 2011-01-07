@@ -3,28 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using PicFace.Generic;
 
 namespace PicFace.Picasa
 {
    /// <summary>
    /// This is one face found on a picture
    /// </summary>
-   internal class Face
+   internal class PicasaFace : Face
    {
+      private Contact _Person;
       /// <summary>
-      /// Rectangle where the face is found
+      /// Person found, must never be null
       /// </summary>
-      public RectangleF Rect { get; set; }
-      /// <summary>
-      /// Person found
-      /// </summary>
-      public Contact Person { get; set; }
+      public Contact Person
+      {
+         get
+         {
+            return _Person;
+         }
+         set
+         {
+            _Person = value;
+            base.Name = _Person.Name;
+         }
+      }
       /// <summary>
       /// Default Constructor
       /// </summary>
-      public Face()
+      public PicasaFace():base("", new RectangleF())
       {
-         Rect = new RectangleF((float)0.0, (float)0.0, (float)0.0, (float)0.0);
          Person = new Contact("", "no name", "", null);
       }
       /// <summary>
@@ -32,7 +40,7 @@ namespace PicFace.Picasa
       /// </summary>
       /// <param name="person"></param>
       /// <param name="rect"></param>
-      public Face(Contact person, RectangleF rect)
+      public PicasaFace(Contact person, RectangleF rect) : base(person.Name, rect)
       {
          Rect = rect;
          Person = person;

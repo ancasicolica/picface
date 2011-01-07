@@ -54,10 +54,15 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generic\Face.cs" />
+    <Compile Include="Generic\FaceList.cs" />
+    <Compile Include="Generic\FaceMerger.cs" />
+    <Compile Include="Generic\FaceViewer.cs" />
     <Compile Include="Picasa\Contact.cs" />
     <Compile Include="Picasa\ContactReader.cs" />
     <Compile Include="Picasa\ContactTable.cs" />
-    <Compile Include="Picasa\Face.cs" />
+    <Compile Include="Picasa\PicasaFace.cs" />
+    <Compile Include="Picasa\PicasaFaceList.cs" />
     <Compile Include="Picasa\Picture.cs" />
     <Compile Include="Picasa\PictureList.cs" />
     <Compile Include="Program.cs" />
@@ -84,6 +89,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ExifTool\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

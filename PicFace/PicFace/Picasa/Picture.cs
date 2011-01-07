@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace PicFace.Picasa
 {
@@ -20,11 +21,15 @@ namespace PicFace.Picasa
       /// <summary>
       /// The faces found
       /// </summary>
-      public List<Face> Faces { get; set; }
+      public PicasaFaceList Faces { get; set; }
       /// <summary>
       /// Name of the file
       /// </summary>
       public string FileName { get; set; }
+      /// <summary>
+      /// Name of the file including the path
+      /// </summary>
+      public string FullFileName { get; set; }
       /// <summary>
       /// How many faces are there we do not know?
       /// </summary>
@@ -40,19 +45,20 @@ namespace PicFace.Picasa
       /// </summary>
       public Picture()
       {
-         Faces = new List<Face>();
+         Faces = new PicasaFaceList();
          FileName = "";
          _UnknownFaces = 0;
       }
       /// <summary>
       /// Specialised constructor
       /// </summary>
-      /// <param name="fileName">File name, no path</param>
-      public Picture(string fileName)
+      /// <param name="path">Full path and name</param>
+      public Picture(string path)
       {
-         FileName = fileName;
+         FileName = Path.GetFileName(path);
+         FullFileName = path;
          _UnknownFaces = 0;
-         Faces = new List<Face>();
+         Faces = new PicasaFaceList();
       }
       /// <summary>
       /// File Name

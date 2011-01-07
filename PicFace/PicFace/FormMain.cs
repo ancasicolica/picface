@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using PicFace.Picasa;
 using System.IO;
+using PicFace.Generic;
 
 namespace PicFace
 {
@@ -17,6 +18,7 @@ namespace PicFace
       private ContactTable _Contacts;
       private string _CurrentDirectory;
       private PictureList _PictureList;
+      private FaceViewer _CurrentFaceViewer;
       #endregion
       public FormMain()
       {
@@ -126,11 +128,29 @@ namespace PicFace
          if (p != null)
          {
             pictureBoxPreview.Load (Path.Combine(_CurrentDirectory, p.FileName));
+            
             listBoxPersonsFound.Items.Clear();
-            foreach (Face f in p.Faces)
+
+            _CurrentFaceViewer = new FaceViewer(p);
+            pictureBoxPreview.Image = _CurrentFaceViewer.Photo;
+
+            foreach (Face f in _CurrentFaceViewer.PicasaFaces)
             {
                listBoxPersonsFound.Items.Add(f);
             }
+         }
+      }
+
+      private void listBoxPersonsFound_SelectedIndexChanged(object sender, EventArgs e)
+      {
+
+      }
+
+      private void pictureBoxPreview_MouseMove(object sender, MouseEventArgs e)
+      {
+         if (_CurrentFaceViewer != null)
+         {
+            _CurrentFaceViewer.OnMouseMove(sender as PictureBox, e);
          }
       }
    }

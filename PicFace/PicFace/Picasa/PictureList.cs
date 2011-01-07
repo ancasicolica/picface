@@ -56,7 +56,7 @@ namespace PicFace.Picasa
                      if (File.Exists(Path.Combine(path, name)))
                      { // yes, the file exists, check for faces
                         lookForFaces = true;
-                        currentPic = new Picture(name);
+                        currentPic = new Picture(Path.Combine(path, name));
                         this.Add(currentPic);
                      }
                      else
@@ -92,7 +92,7 @@ namespace PicFace.Picasa
                               float h = (float)Convert.ToInt32(rectInfo.Substring(12, 4), 16) / 0xffff;
                               RectangleF rect = new RectangleF(x, y, w, h);
 
-                              Face f = new Face(contacts[id], rect);
+                              PicasaFace f = new PicasaFace(contacts[id], rect);
                               currentPic.Faces.Add(f);
                            }
                            else
