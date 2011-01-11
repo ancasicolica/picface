@@ -49,11 +49,16 @@
          this.buttonRefreshContacts = new System.Windows.Forms.Button();
          this.labelContactsFile = new System.Windows.Forms.Label();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+         this.groupBoxPicasa = new System.Windows.Forms.GroupBox();
+         this.groupBox1 = new System.Windows.Forms.GroupBox();
+         this.listBoxPersonsFoundXmp = new System.Windows.Forms.ListBox();
          this.menuStrip1.SuspendLayout();
          this.tabControlContacts.SuspendLayout();
          this.tabPage1.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
          this.tabPageContacts.SuspendLayout();
+         this.groupBoxPicasa.SuspendLayout();
+         this.groupBox1.SuspendLayout();
          this.SuspendLayout();
          // 
          // statusStrip1
@@ -125,7 +130,8 @@
          // 
          // tabPage1
          // 
-         this.tabPage1.Controls.Add(this.listBoxPersonsFound);
+         this.tabPage1.Controls.Add(this.groupBox1);
+         this.tabPage1.Controls.Add(this.groupBoxPicasa);
          this.tabPage1.Controls.Add(this.pictureBoxPreview);
          this.tabPage1.Controls.Add(this.listBoxFiles);
          this.tabPage1.Controls.Add(this.textBoxDirectory);
@@ -140,13 +146,12 @@
          // 
          // listBoxPersonsFound
          // 
-         this.listBoxPersonsFound.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.listBoxPersonsFound.Dock = System.Windows.Forms.DockStyle.Fill;
          this.listBoxPersonsFound.FormattingEnabled = true;
-         this.listBoxPersonsFound.Location = new System.Drawing.Point(178, 361);
+         this.listBoxPersonsFound.Location = new System.Drawing.Point(3, 16);
          this.listBoxPersonsFound.MultiColumn = true;
          this.listBoxPersonsFound.Name = "listBoxPersonsFound";
-         this.listBoxPersonsFound.Size = new System.Drawing.Size(226, 56);
+         this.listBoxPersonsFound.Size = new System.Drawing.Size(235, 69);
          this.listBoxPersonsFound.Sorted = true;
          this.listBoxPersonsFound.TabIndex = 4;
          this.listBoxPersonsFound.SelectedIndexChanged += new System.EventHandler(this.listBoxPersonsFound_SelectedIndexChanged);
@@ -159,7 +164,7 @@
          this.pictureBoxPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.pictureBoxPreview.Location = new System.Drawing.Point(178, 39);
          this.pictureBoxPreview.Name = "pictureBoxPreview";
-         this.pictureBoxPreview.Size = new System.Drawing.Size(470, 316);
+         this.pictureBoxPreview.Size = new System.Drawing.Size(470, 294);
          this.pictureBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
          this.pictureBoxPreview.TabIndex = 3;
          this.pictureBoxPreview.TabStop = false;
@@ -264,6 +269,40 @@
          this.labelContactsFile.TabIndex = 0;
          this.labelContactsFile.Text = "label1";
          // 
+         // groupBoxPicasa
+         // 
+         this.groupBoxPicasa.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.groupBoxPicasa.Controls.Add(this.listBoxPersonsFound);
+         this.groupBoxPicasa.Location = new System.Drawing.Point(178, 339);
+         this.groupBoxPicasa.Name = "groupBoxPicasa";
+         this.groupBoxPicasa.Size = new System.Drawing.Size(241, 100);
+         this.groupBoxPicasa.TabIndex = 5;
+         this.groupBoxPicasa.TabStop = false;
+         this.groupBoxPicasa.Text = "Picasa Faces";
+         // 
+         // groupBox1
+         // 
+         this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+         this.groupBox1.Controls.Add(this.listBoxPersonsFoundXmp);
+         this.groupBox1.Location = new System.Drawing.Point(425, 339);
+         this.groupBox1.Name = "groupBox1";
+         this.groupBox1.Size = new System.Drawing.Size(223, 100);
+         this.groupBox1.TabIndex = 6;
+         this.groupBox1.TabStop = false;
+         this.groupBox1.Text = "XMP Faces";
+         // 
+         // listBoxPersonsFoundXmp
+         // 
+         this.listBoxPersonsFoundXmp.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.listBoxPersonsFoundXmp.FormattingEnabled = true;
+         this.listBoxPersonsFoundXmp.Location = new System.Drawing.Point(3, 16);
+         this.listBoxPersonsFoundXmp.MultiColumn = true;
+         this.listBoxPersonsFoundXmp.Name = "listBoxPersonsFoundXmp";
+         this.listBoxPersonsFoundXmp.Size = new System.Drawing.Size(217, 69);
+         this.listBoxPersonsFoundXmp.Sorted = true;
+         this.listBoxPersonsFoundXmp.TabIndex = 4;
+         // 
          // FormMain
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -285,6 +324,8 @@
          ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
          this.tabPageContacts.ResumeLayout(false);
          this.tabPageContacts.PerformLayout();
+         this.groupBoxPicasa.ResumeLayout(false);
+         this.groupBox1.ResumeLayout(false);
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -313,6 +354,9 @@
       private System.Windows.Forms.PictureBox pictureBoxPreview;
       private System.Windows.Forms.ListBox listBoxFiles;
       private System.Windows.Forms.ListBox listBoxPersonsFound;
+      private System.Windows.Forms.GroupBox groupBox1;
+      private System.Windows.Forms.ListBox listBoxPersonsFoundXmp;
+      private System.Windows.Forms.GroupBox groupBoxPicasa;
    }
 }
 

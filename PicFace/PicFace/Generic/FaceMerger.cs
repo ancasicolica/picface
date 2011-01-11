@@ -37,9 +37,9 @@ namespace PicFace.Generic
       /// Constructor: the ExifTool data is loaded when creating this picture
       /// </summary>
       /// <param name="pic"></param>
-      public FaceMerger(Picture pic)
+      public FaceMerger(PicasaPictureInfo pic)
       {
-         _PicasaFaces = new FaceList(pic.Faces);
+         _PicasaFaces = pic.Faces;
       }
    }
 }

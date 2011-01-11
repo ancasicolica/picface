@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PicFace.Picasa;
+using PicFace.ExifTool;
 
 namespace PicFace.Generic
 {
@@ -29,5 +30,6 @@ namespace PicFace.Generic
             this.Add(face);
          }
       }
+ 
    }
 }

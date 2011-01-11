@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -48,6 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExifTool\ExifPictureInfo.cs" />
+    <Compile Include="ExifTool\ExifPictureInfoList.cs" />
+    <Compile Include="ExifTool\ExifToolPictureData.cs" />
+    <Compile Include="ExifTool\Region.cs" />
+    <Compile Include="ExifTool\RegionInfoContainer.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,13 +64,17 @@
     <Compile Include="Generic\FaceList.cs" />
     <Compile Include="Generic\FaceMerger.cs" />
     <Compile Include="Generic\FaceViewer.cs" />
+    <Compile Include="Generic\PictureComparer.cs" />
+    <Compile Include="Generic\PictureInfo.cs" />
+    <Compile Include="Generic\PictureInfoList.cs" />
+    <Compile Include="Generic\PictureList.cs" />
     <Compile Include="Picasa\Contact.cs" />
     <Compile Include="Picasa\ContactReader.cs" />
     <Compile Include="Picasa\ContactTable.cs" />
     <Compile Include="Picasa\PicasaFace.cs" />
     <Compile Include="Picasa\PicasaFaceList.cs" />
-    <Compile Include="Picasa\Picture.cs" />
-    <Compile Include="Picasa\PictureList.cs" />
+    <Compile Include="Picasa\PicasaPictureInfo.cs" />
+    <Compile Include="Picasa\PicasaPictureInfoList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">
@@ -91,7 +101,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ExifTool\" />
+    <None Include="exiftool.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Newtonsoft.Json.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

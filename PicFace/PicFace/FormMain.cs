@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using PicFace.Picasa;
 using System.IO;
 using PicFace.Generic;
+using PicFace.ExifTool;
 
 namespace PicFace
 {
@@ -18,6 +19,7 @@ namespace PicFace
       private ContactTable _Contacts;
       private string _CurrentDirectory;
       private PictureList _PictureList;
+
       private FaceViewer _CurrentFaceViewer;
       #endregion
       public FormMain()
@@ -111,11 +113,12 @@ namespace PicFace
       private void LoadPictureIndex()
       {
          _PictureList = new PictureList(_CurrentDirectory, _Contacts);
+
          listBoxFiles.Items.Clear();
-         foreach (Picture p in _PictureList)
+        /* foreach (PictureInfo p in _PictureList.ConsolidatedList)
          {
             listBoxFiles.Items.Add(p);
-         }
+         }*/
       }
       /// <summary>
       /// Selected Index changed
@@ -124,7 +127,7 @@ namespace PicFace
       /// <param name="e"></param>
       private void listBoxFiles_SelectedIndexChanged(object sender, EventArgs e)
       {
-         Picture p = listBoxFiles.SelectedItem as Picture;
+         PicasaPictureInfo p = listBoxFiles.SelectedItem as PicasaPictureInfo;
          if (p != null)
          {
             pictureBoxPreview.Load (Path.Combine(_CurrentDirectory, p.FileName));
@@ -140,12 +143,24 @@ namespace PicFace
             }
          }
       }
-
+      /// <summary>
+      /// Index of the list changed
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void listBoxPersonsFound_SelectedIndexChanged(object sender, EventArgs e)
       {
-
+         Face f = listBoxPersonsFound.SelectedItem as Face;
+         if (f != null)
+         {
+            _CurrentFaceViewer.ShowFace(pictureBoxPreview, f);
+         }
       }
-
+      /// <summary>
+      /// Mouse moves over picture
+      /// </summary>
+      /// <param name="sender">The picture box the mouse is moving on</param>
+      /// <param name="e">Event args</param>
       private void pictureBoxPreview_MouseMove(object sender, MouseEventArgs e)
       {
          if (_CurrentFaceViewer != null)

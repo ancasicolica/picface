@@ -38,8 +38,8 @@ namespace PicFace.Picasa
       /// <summary>
       /// Specialised Constructor
       /// </summary>
-      /// <param name="person"></param>
-      /// <param name="rect"></param>
+      /// <param name="person">Contact</param>
+      /// <param name="rect">Rectangle</param>
       public PicasaFace(Contact person, RectangleF rect) : base(person.Name, rect)
       {
          Rect = rect;

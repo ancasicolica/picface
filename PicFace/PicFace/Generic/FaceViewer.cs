@@ -5,6 +5,7 @@ using System.Text;
 using PicFace.Picasa;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace PicFace.Generic
 {
@@ -17,6 +18,7 @@ namespace PicFace.Generic
       private Pen _Pen;
       private SolidBrush _Brush;
       private Graphics _Graphic;
+      private GraphicsState _GraphicState;
       /// <summary>
       /// The photo data belonging to this faces
       /// </summary>
@@ -31,10 +33,11 @@ namespace PicFace.Generic
       /// Constructor: the ExifTool data is loaded when creating this picture
       /// </summary>
       /// <param name="pic">Picture</param>
-      public FaceViewer(Picture pic): base(pic)
+      public FaceViewer(PicasaPictureInfo pic): base(pic)
       {
          _Photo = Image.FromFile(pic.FullFileName);
-        
+         _Graphic = Graphics.FromImage(_Photo);
+         _GraphicState = _Graphic.Save();
          _Pen = new Pen(Color.Red, 12);
          _Brush  = new SolidBrush(Color.Red);  
       }
@@ -47,8 +50,7 @@ namespace PicFace.Generic
       {
          // Paint Rectangle for persons
 
-        // _Graphic = sender.CreateGraphics();
-         _Graphic = Graphics.FromImage(_Photo);
+
          foreach (Face f in base.PicasaFaces)
          {
 
@@ -60,6 +62,30 @@ namespace PicFace.Generic
             _Graphic.DrawString(f.Name, new Font("Arial", 12), _Brush, f.Rect.X * _Photo.Width, f.Rect.Y * _Photo.Height);
          }
          sender.Refresh();
+      }
+      /// <summary>
+      /// Shows a selected face on the picture box
+      /// </summary>
+      /// <param name="box">Picture box to use</param>
+      /// <param name="face">Face</param>
+      internal void ShowFace(PictureBox box, Face face)
+      {
+  
+         foreach (Face f in base.PicasaFaces)
+         {
+
+            if (face == f)
+            {
+               _Graphic.DrawRectangle(_Pen, f.Rect.X * _Photo.Width,
+                  f.Rect.Y * _Photo.Height,
+                  (f.Rect.Width - f.Rect.X) * _Photo.Width,
+                  (f.Rect.Height - f.Rect.Y) * _Photo.Height);
+
+               _Graphic.DrawString(f.Name, new Font("Arial", 12), _Brush, f.Rect.X * _Photo.Width, f.Rect.Y * _Photo.Height);
+            }
+         }
+         box.Refresh();
+
       }
    }
 }
