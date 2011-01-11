@@ -115,31 +115,39 @@ namespace PicFace
          _PictureList = new PictureList(_CurrentDirectory, _Contacts);
 
          listBoxFiles.Items.Clear();
-        /* foreach (PictureInfo p in _PictureList.ConsolidatedList)
+         foreach (KeyValuePair<string, PictureComparer> p in _PictureList.ConsolidatedList)
          {
-            listBoxFiles.Items.Add(p);
-         }*/
+            listBoxFiles.Items.Add(p.Value);
+         }
       }
       /// <summary>
-      /// Selected Index changed
+      /// Selected Index changed: load the picture and show who is on it
       /// </summary>
       /// <param name="sender"></param>
       /// <param name="e"></param>
       private void listBoxFiles_SelectedIndexChanged(object sender, EventArgs e)
       {
-         PicasaPictureInfo p = listBoxFiles.SelectedItem as PicasaPictureInfo;
+         PictureComparer p = listBoxFiles.SelectedItem as PictureComparer;
          if (p != null)
          {
             pictureBoxPreview.Load (Path.Combine(_CurrentDirectory, p.FileName));
             
             listBoxPersonsFound.Items.Clear();
+            listBoxPersonsFoundXmp.Items.Clear();
 
-            _CurrentFaceViewer = new FaceViewer(p);
-            pictureBoxPreview.Image = _CurrentFaceViewer.Photo;
-
-            foreach (Face f in _CurrentFaceViewer.PicasaFaces)
+            if (p.PicasaInfo != null)
             {
-               listBoxPersonsFound.Items.Add(f);
+               foreach (Face f in p.PicasaInfo.Faces)
+               {
+                  listBoxPersonsFound.Items.Add(f);
+               }
+            }
+            if (p.ExifInfo != null)
+            {
+               foreach (Face f in p.ExifInfo.Faces)
+               {
+                  listBoxPersonsFoundXmp.Items.Add(f);
+               }
             }
          }
       }

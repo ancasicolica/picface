@@ -14,7 +14,7 @@ namespace PicFace.Generic
    {
       private PicasaPictureInfoList _PicasaPictures;
       private ExifPictureInfoList _ExifPictures;
-      private List<PictureComparer> _ConsolidatedList;
+      private Dictionary<string, PictureComparer> _ConsolidatedList;
       private string _Path;
       /// <summary>
       /// Path where the pictures were found
@@ -49,7 +49,7 @@ namespace PicFace.Generic
       /// <summary>
       /// List containing every picture with a face in it, not depending if the source was picasa or exif
       /// </summary>
-      public List<PictureComparer> ConsolidatedList
+      public Dictionary<string, PictureComparer> ConsolidatedList
       {
          get
          {
@@ -65,9 +65,29 @@ namespace PicFace.Generic
          _Path = path;
          _PicasaPictures = new PicasaPictureInfoList(path, contacts);
          _ExifPictures = new ExifPictureInfoList(path);
-         _ConsolidatedList = new List<PictureComparer>();
+         _ConsolidatedList = new Dictionary<string, PictureComparer>();
 
-
+         // add first all picasa pictures
+         foreach (KeyValuePair<string, PictureInfo> entry in _PicasaPictures)
+         {
+            PictureComparer pc = new PictureComparer();
+            pc.PicasaInfo = entry.Value as PicasaPictureInfo;
+            _ConsolidatedList.Add(entry.Key, pc);
+         }
+         // now add all pictures having exiftool information
+         foreach (KeyValuePair<string, PictureInfo> entry in _ExifPictures)
+         {
+            if (_ConsolidatedList.ContainsKey(entry.Key))
+            {
+               _ConsolidatedList[entry.Key].ExifInfo = entry.Value as ExifPictureInfo;
+            }
+            else
+            {
+               PictureComparer pc = new PictureComparer();
+               pc.ExifInfo = entry.Value as ExifPictureInfo;
+               _ConsolidatedList.Add(entry.Key, pc);
+            }
+         }
       }
    }
 }

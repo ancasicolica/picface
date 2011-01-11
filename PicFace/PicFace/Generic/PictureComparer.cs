@@ -12,33 +12,63 @@ namespace PicFace.Generic
    /// </summary>
    internal class PictureComparer
    {
-      PicasaPictureInfo _PicasaInfo;
-      ExifPictureInfo _ExifInfo;
       /// <summary>
       /// The Picasa Part of the Information
       /// </summary>
-      public PicasaPictureInfo PicasaInfo
-      {
-         get
-         {
-            return _PicasaInfo;
-         }
-      }
+      public PicasaPictureInfo PicasaInfo {get; set;}
       /// <summary>
       /// The Exif Part of the Information
       /// </summary>
-      public ExifPictureInfo ExifInfo
+      public ExifPictureInfo ExifInfo {get; set;}
+      /// <summary>
+      /// Filename
+      /// </summary>
+      public string FileName
       {
          get
          {
-            return _ExifInfo;
+            if (!ExifInfoMissing)
+            {
+               return ExifInfo.FileName;
+            }
+            if (!PicasaInfoMissing)
+            {
+               return PicasaInfo.FileName;
+            }
+            return "none.jpg"; // should not happen!
          }
       }
-
-      public PictureComparer(PicasaPictureInfo picasaInfo, ExifPictureInfo exifInfo)
+      /// <summary>
+      /// Is Picasa Info missing?
+      /// </summary>
+      public bool PicasaInfoMissing
       {
-         _PicasaInfo = picasaInfo;
-         _ExifInfo = exifInfo;
+         get
+         {
+            return PicasaInfo == null;
+         }
+      }
+      /// <summary>
+      /// Is Exif Info missing?
+      /// </summary>
+      public bool ExifInfoMissing
+      {
+         get
+         {
+            return ExifInfo == null;
+         }
+      }
+      public PictureComparer()
+      {
+  
+      }
+      /// <summary>
+      /// ToString override
+      /// </summary>
+      /// <returns></returns>
+      public override string ToString()
+      {
+         return FileName;
       }
    }
 }

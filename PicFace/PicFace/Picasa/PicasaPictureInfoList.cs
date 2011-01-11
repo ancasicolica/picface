@@ -49,7 +49,7 @@ namespace PicFace.Picasa
                      { // yes, the file exists, check for faces
                         lookForFaces = true;
                         currentPic = new PicasaPictureInfo(Path.Combine(path, name));
-                        this.Add(currentPic);
+                        this.Add(currentPic.FileName.ToUpper(), currentPic);
                      }
                      else
                      { // no, this one is not here anymore

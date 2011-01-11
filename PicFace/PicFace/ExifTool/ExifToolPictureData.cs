@@ -61,7 +61,7 @@ namespace PicFace.ExifTool
             ExifPictureInfo info = new ExifPictureInfo(etp);
             if (info.Faces != null && info.Faces.Count > 0)
             {  // add only pictures with faces in it!
-               list.Add(info);
+               list.Add(info.FileName.ToUpper(), info);
             }
          }
       }
