@@ -137,16 +137,16 @@ namespace PicFace
 
             if (p.PicasaInfo != null)
             {
-               foreach (Face f in p.PicasaInfo.Faces)
+               foreach (KeyValuePair<string, Face> kp in p.PicasaInfo.Faces)
                {
-                  listBoxPersonsFound.Items.Add(f);
+                  listBoxPersonsFound.Items.Add(kp.Value);
                }
             }
             if (p.ExifInfo != null)
             {
-               foreach (Face f in p.ExifInfo.Faces)
+               foreach (KeyValuePair<string, Face> kp in p.ExifInfo.Faces)
                {
-                  listBoxPersonsFoundXmp.Items.Add(f);
+                  listBoxPersonsFoundXmp.Items.Add(kp.Value);
                }
             }
          }

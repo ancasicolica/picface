@@ -51,8 +51,9 @@ namespace PicFace.Generic
          // Paint Rectangle for persons
 
 
-         foreach (Face f in base.PicasaFaces)
+         foreach (KeyValuePair<string, Face> kp in base.PicasaFaces)
          {
+            Face f = kp.Value;
 
             _Graphic.DrawRectangle(_Pen, f.Rect.X * _Photo.Width,
                f.Rect.Y * _Photo.Height,
@@ -70,10 +71,10 @@ namespace PicFace.Generic
       /// <param name="face">Face</param>
       internal void ShowFace(PictureBox box, Face face)
       {
-  
-         foreach (Face f in base.PicasaFaces)
-         {
 
+         foreach (KeyValuePair<string, Face> kp in base.PicasaFaces)
+         {
+            Face f = kp.Value;
             if (face == f)
             {
                _Graphic.DrawRectangle(_Pen, f.Rect.X * _Photo.Width,

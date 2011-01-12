@@ -58,10 +58,13 @@ namespace PicFace.ExifTool
 
          foreach (ExifToolPictureData etp in imageData)
          {
-            ExifPictureInfo info = new ExifPictureInfo(etp);
-            if (info.Faces != null && info.Faces.Count > 0)
-            {  // add only pictures with faces in it!
-               list.Add(info.FileName.ToUpper(), info);
+            if (etp.RegionInfo != null)
+            {
+               ExifPictureInfo info = new ExifPictureInfo(etp);
+               if (info.Faces != null && info.Faces.Count > 0)
+               {  // add only pictures with faces in it!
+                  list.Add(info.FileName.ToUpper(), info);
+               }
             }
          }
       }

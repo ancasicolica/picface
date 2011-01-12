@@ -37,7 +37,7 @@ namespace PicFace.ExifTool
                w = Convert.ToSingle(rect[2]);
                h = Convert.ToSingle(rect[3]);
                Face f = new Face(r.PersonDisplayName, new RectangleF(x,y,w,h));
-               Faces.Add(f);
+               Faces.Add(f.Name, f);
             }
             catch
             {

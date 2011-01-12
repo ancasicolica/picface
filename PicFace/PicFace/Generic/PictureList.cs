@@ -62,6 +62,7 @@ namespace PicFace.Generic
       /// <param name="path">Path where the pictures are</param>
       public PictureList(string path, ContactTable contacts)
       {
+         
          _Path = path;
          _PicasaPictures = new PicasaPictureInfoList(path, contacts);
          _ExifPictures = new ExifPictureInfoList(path);
@@ -72,6 +73,7 @@ namespace PicFace.Generic
          {
             PictureComparer pc = new PictureComparer();
             pc.PicasaInfo = entry.Value as PicasaPictureInfo;
+            pc.CheckPics();
             _ConsolidatedList.Add(entry.Key, pc);
          }
          // now add all pictures having exiftool information
@@ -80,14 +82,17 @@ namespace PicFace.Generic
             if (_ConsolidatedList.ContainsKey(entry.Key))
             {
                _ConsolidatedList[entry.Key].ExifInfo = entry.Value as ExifPictureInfo;
+               _ConsolidatedList[entry.Key].CheckPics();
             }
             else
             {
                PictureComparer pc = new PictureComparer();
                pc.ExifInfo = entry.Value as ExifPictureInfo;
+               pc.CheckPics();
                _ConsolidatedList.Add(entry.Key, pc);
             }
          }
+         
       }
    }
 }

@@ -91,7 +91,7 @@ namespace PicFace.Picasa
                               RectangleF rect = new RectangleF(x, y, w, h);
 
                               PicasaFace f = new PicasaFace(contacts[id], rect);
-                              currentPic.Faces.Add(f);
+                              currentPic.Faces.Add(f.Name, f);
                            }
                            else
                            {  // we don't know this one!
