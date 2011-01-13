@@ -13,24 +13,55 @@ using PicFace.ExifTool;
 
 namespace PicFace
 {
+   /// <summary>
+   /// The main form of the tool
+   /// </summary>
    public partial class FormMain : Form
    {
       #region Fields
+      /// <summary>
+      /// All contacts
+      /// </summary>
       private ContactTable _Contacts;
+      /// <summary>
+      /// Name of the current directory
+      /// </summary>
       private string _CurrentDirectory;
+      /// <summary>
+      /// Picture List
+      /// </summary>
       private PictureList _PictureList;
-
-      private FaceViewer _CurrentFaceViewer;
+      /// <summary>
+      /// The object to visualise a face
+      /// </summary>
+      private FaceToPictureBox _FaceVisualiser;
       #endregion
+      /// <summary>
+      /// Constructor
+      /// </summary>
       public FormMain()
       {
          InitializeComponent();
       }
-
+      /// <summary>
+      /// Form is being loaded
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void FormMain_Load(object sender, EventArgs e)
       {
          // Refresh contacts first
          buttonRefreshContacts_Click(sender, e);
+         _FaceVisualiser = new FaceToPictureBox(pictureBoxPreview);
+
+#if DEBUG
+         //// ###############
+         _CurrentDirectory = @"C:\Users\Christian\Pictures\Tests";
+         textBoxDirectory.Text = _CurrentDirectory;
+
+         LoadPictureIndex();
+         //// ###############
+#endif
       }
       /// <summary>
       /// Refresh the contacts
@@ -51,7 +82,7 @@ namespace PicFace
          labelContactNb.Text = listBoxContacts.Items.Count.ToString() + " Contacts";
       }
       /// <summary>
-      /// Show info about the contact
+      /// Show info about the contact when selecting a new one
       /// </summary>
       /// <param name="sender"></param>
       /// <param name="e"></param>
@@ -114,10 +145,15 @@ namespace PicFace
       {
          _PictureList = new PictureList(_CurrentDirectory, _Contacts);
 
-         listBoxFiles.Items.Clear();
+         listBoxFilesChanged.Items.Clear();
          foreach (KeyValuePair<string, PictureComparer> p in _PictureList.ConsolidatedList)
          {
             listBoxFiles.Items.Add(p.Value);
+
+            if (p.Value.ExifUpdateNeeded)
+            {
+               listBoxFilesChanged.Items.Add(p.Value);
+            }
          }
       }
       /// <summary>
@@ -127,11 +163,11 @@ namespace PicFace
       /// <param name="e"></param>
       private void listBoxFiles_SelectedIndexChanged(object sender, EventArgs e)
       {
-         PictureComparer p = listBoxFiles.SelectedItem as PictureComparer;
+         PictureComparer p = listBoxFilesChanged.SelectedItem as PictureComparer;
          if (p != null)
          {
-            pictureBoxPreview.Load (Path.Combine(_CurrentDirectory, p.FileName));
-            
+            _FaceVisualiser.FileName = Path.Combine(_CurrentDirectory, p.FileName);
+            // Add all faces to the found faces list boxes
             listBoxPersonsFound.Items.Clear();
             listBoxPersonsFoundXmp.Items.Clear();
 
@@ -158,10 +194,14 @@ namespace PicFace
       /// <param name="e"></param>
       private void listBoxPersonsFound_SelectedIndexChanged(object sender, EventArgs e)
       {
-         Face f = listBoxPersonsFound.SelectedItem as Face;
-         if (f != null)
+         ListBox listbox = sender as ListBox;
+         if (listbox != null)
          {
-            _CurrentFaceViewer.ShowFace(pictureBoxPreview, f);
+            Face f = listbox.SelectedItem as Face;
+            if (f != null)
+            {
+               _FaceVisualiser.DrawFace(f);
+            }
          }
       }
       /// <summary>
@@ -171,10 +211,7 @@ namespace PicFace
       /// <param name="e">Event args</param>
       private void pictureBoxPreview_MouseMove(object sender, MouseEventArgs e)
       {
-         if (_CurrentFaceViewer != null)
-         {
-            _CurrentFaceViewer.OnMouseMove(sender as PictureBox, e);
-         }
+
       }
    }
 }

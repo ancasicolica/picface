@@ -54,6 +54,7 @@
     <Compile Include="ExifTool\ExifToolPictureData.cs" />
     <Compile Include="ExifTool\Region.cs" />
     <Compile Include="ExifTool\RegionInfoContainer.cs" />
+    <Compile Include="FaceToPictureBox.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,8 +63,6 @@
     </Compile>
     <Compile Include="Generic\Face.cs" />
     <Compile Include="Generic\FaceList.cs" />
-    <Compile Include="Generic\FaceMerger.cs" />
-    <Compile Include="Generic\FaceViewer.cs" />
     <Compile Include="Generic\PictureComparer.cs" />
     <Compile Include="Generic\PictureInfo.cs" />
     <Compile Include="Generic\PictureInfoList.cs" />
