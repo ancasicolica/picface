@@ -6,14 +6,48 @@ using PicFace.Picasa;
 using PicFace.ExifTool;
 using System.Drawing;
 using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace PicFace.Generic
 {
+   #region OnSavedEventArgs
+   /// <summary>
+   /// Event args when saved
+   /// </summary>
+   internal class OnSavedEventArgs
+   {
+      /// <summary>
+      /// Output of the tool when saving data
+      /// </summary>
+      public string ToolOutput { get; private set; }
+      /// <summary>
+      /// Constructor
+      /// </summary>
+      /// <param name="output"></param>
+      public OnSavedEventArgs(string output)
+      {
+         ToolOutput = output;
+      }
+   }
+   #endregion
    /// <summary>
    /// This class contains the information of picasa and exiftool and compares them
    /// </summary>
    internal class PictureComparer
    {
+      /// <summary>
+      /// Delegate for event after data was saved
+      /// </summary>
+      /// <param name="sender">Sender object</param>
+      /// <param name="args">Result of saving</param>
+      public delegate void OnSaved(object sender, OnSavedEventArgs args);
+      /// <summary>
+      /// Event after data was saved
+      /// </summary>
+      public event OnSaved Saved;
+
       /// <summary>
       /// The delta between Picasa and exif
       /// </summary>
@@ -30,6 +64,29 @@ namespace PicFace.Generic
       /// </summary>
       public ExifPictureInfo ExifInfo {get; set;}
       /// <summary>
+      /// The string needed for exif tool to set the settings from picasa
+      /// </summary>
+      public string ExifToolChangeString
+      {
+         get
+         {
+            if (PicasaInfoMissing)
+            {  // nothing
+               return "";
+            }
+            string s = "";
+            foreach (KeyValuePair<string, Face> kvp in PicasaInfo.Faces)
+            {
+               Face f = kvp.Value;
+               s += "-xmp-mp:RegionPersonDisplayName=" + f.Name + Environment.NewLine;
+               s += "-xmp-mp:RegionRectangle=" + f.Rect.X.ToString("0.00000000") + ", " +
+                  f.Rect.Y.ToString("0.00000000") + ", " + f.Rect.Width.ToString("0.00000000") + ", " +
+                  f.Rect.Height.ToString("0.00000000") +   Environment.NewLine;
+            }
+            return s;
+         }
+      }
+      /// <summary>
       /// Filename
       /// </summary>
       public string FileName
@@ -43,6 +100,24 @@ namespace PicFace.Generic
             if (!PicasaInfoMissing)
             {
                return PicasaInfo.FileName;
+            }
+            return "none.jpg"; // should not happen!
+         }
+      }
+      /// <summary>
+      /// Filename including the path
+      /// </summary>
+      public string FullFileName
+      {
+         get
+         {
+            if (!ExifInfoMissing)
+            {
+               return ExifInfo.FullFileName;
+            }
+            if (!PicasaInfoMissing)
+            {
+               return PicasaInfo.FullFileName;
             }
             return "none.jpg"; // should not happen!
          }
@@ -199,7 +274,10 @@ namespace PicFace.Generic
             { // region?
                if (!CompareRectangle(kp.Value.Rect, PicasaInfo.Faces[kp.Key].Rect))
                {
-                  _RegionMismatch.Add(kp.Key, kp.Value);
+                  if (!_RegionMismatch.ContainsKey(kp.Key))
+                  {
+                    _RegionMismatch.Add(kp.Key, kp.Value);
+                  }
                }
             }
          }
@@ -251,6 +329,40 @@ namespace PicFace.Generic
             return false;
          }
          return true;
+      }
+      /// <summary>
+      /// Saves the data
+      /// </summary>
+      /// <returns></returns>
+      public bool Save()
+      {
+         if (ExifToolChangeString.Length == 0)
+         {
+            Debug.WriteLine("Nothing to save", this.ToString());
+            return false;
+         }
+
+         string cmd = "-preserve" + Environment.NewLine;
+         cmd += "-xmp-mp:RegionPersonDisplayName= " + Environment.NewLine+ ExifToolChangeString;
+
+         ExifToolThread exifTool = new ExifToolThread(cmd , FullFileName);
+         exifTool.Finished += new ExifToolThread.OnFinished(exifTool_Finished);
+         exifTool.Start();
+
+         return true;
+      }
+      /// <summary>
+      /// One exiftool finished, shot event when registerd
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="args"></param>
+      void exifTool_Finished(object sender, FinishedEventArgs args)
+      {
+         if (Saved != null)
+         {
+            Saved(this, new OnSavedEventArgs(args.ToolOutput + Environment.NewLine +
+               args.ErrorOutput + Environment.NewLine));
+         }
       }
    }
 }

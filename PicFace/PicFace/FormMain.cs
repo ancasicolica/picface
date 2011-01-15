@@ -10,6 +10,7 @@ using PicFace.Picasa;
 using System.IO;
 using PicFace.Generic;
 using PicFace.ExifTool;
+using System.Diagnostics;
 
 namespace PicFace
 {
@@ -53,7 +54,7 @@ namespace PicFace
          // Refresh contacts first
          buttonRefreshContacts_Click(sender, e);
          _FaceVisualiser = new FaceToPictureBox(pictureBoxPreview);
-
+         toolStripStatusLabelInfo.Text = "";
 #if DEBUG
          //// ###############
          _CurrentDirectory = @"C:\Users\Christian\Pictures\Tests";
@@ -143,8 +144,24 @@ namespace PicFace
       /// </summary>
       private void LoadPictureIndex()
       {
+         toolStripStatusLabelInfo.Text = "Loading pictures";
          _PictureList = new PictureList(_CurrentDirectory, _Contacts);
+         _PictureList.Saved += new PictureList.OnSaved(_PictureList_Saved);
+         // all files found
+         listBoxAllFiles.Items.Clear();
+         listBoxFiles.Items.Clear();
+         listBoxFilesChanged.Items.Clear();
 
+         DirectoryInfo dirInfo = new DirectoryInfo(_CurrentDirectory);
+         foreach (FileInfo f in dirInfo.GetFiles("*.jpg"))
+         {
+            if (f.Name.ToLower().EndsWith("jpg"))
+            {
+               listBoxAllFiles.Items.Add(f);
+            }
+         }
+
+         // all changed files
          listBoxFilesChanged.Items.Clear();
          foreach (KeyValuePair<string, PictureComparer> p in _PictureList.ConsolidatedList)
          {
@@ -153,8 +170,32 @@ namespace PicFace
             if (p.Value.ExifUpdateNeeded)
             {
                listBoxFilesChanged.Items.Add(p.Value);
+               Debug.WriteLine(p.Value.ExifToolChangeString);
             }
          }
+      }
+      /// <summary>
+      /// Event when Picture List was saved
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="args"></param>
+      void _PictureList_Saved(object sender, OnPictureListSavedEventArgs args)
+      {
+         if (this.InvokeRequired)
+         {// Make sure we run on UI thread
+            // Create a delegate to self 
+            PictureList.OnSaved safeEvent = new PictureList.OnSaved(_PictureList_Saved);
+            // Roll arguments in an Object array
+            Object[] arguments = new Object[] {sender, args };
+
+            // "Recurse once, onto another thread"
+            this.Invoke(safeEvent, arguments);
+            return;
+         }
+         textBoxLog.Text = args.Result;
+         toolStripStatusLabelInfo.Text = "Data saved";
+         LoadPictureIndex();
+         this.Cursor = Cursors.Default;
       }
       /// <summary>
       /// Selected Index changed: load the picture and show who is on it
@@ -188,6 +229,19 @@ namespace PicFace
          }
       }
       /// <summary>
+      /// Debug: double click on an changed item can do somthing
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void listBoxFilesChanged_DoubleClick(object sender, EventArgs e)
+      {
+         PictureComparer p = listBoxFilesChanged.SelectedItem as PictureComparer;
+         if (p != null)
+         {
+            p.Save();
+         }
+      }
+      /// <summary>
       /// Index of the list changed
       /// </summary>
       /// <param name="sender"></param>
@@ -213,5 +267,27 @@ namespace PicFace
       {
 
       }
+      /// <summary>
+      /// Save changed Data
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void buttonSaveChangedData_Click(object sender, EventArgs e)
+      {
+         this.Cursor = Cursors.WaitCursor;
+         _FaceVisualiser.ReleasePicture();
+         _PictureList.SaveChangedData();
+
+      }
+      /// <summary>
+      /// Refresh view (reload picasa and xmp data)
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void buttonRefresh_Click(object sender, EventArgs e)
+      {
+         LoadPictureIndex();
+      }
+
    }
 }

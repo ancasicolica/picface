@@ -36,8 +36,8 @@ namespace PicFace.ExifTool
                y = Convert.ToSingle(rect[1]);
                w = Convert.ToSingle(rect[2]);
                h = Convert.ToSingle(rect[3]);
-               Face f = new Face(r.PersonDisplayName, new RectangleF(x,y,w,h));
-               if (f.Name != null)
+               Face f = new Face(r.PersonConvertedName, new RectangleF(x, y, w, h));
+               if (f.Name != null && !f.Name.Equals("ffffffffffffffff"))
                {
                   Faces.Add(f.Name, f);
                }

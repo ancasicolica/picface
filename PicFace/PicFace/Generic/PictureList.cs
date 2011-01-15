@@ -4,9 +4,30 @@ using System.Linq;
 using System.Text;
 using PicFace.Picasa;
 using PicFace.ExifTool;
+using System.Diagnostics;
 
 namespace PicFace.Generic
 {
+   #region OnSavedEventArgs
+   /// <summary>
+   /// Event args when saved
+   /// </summary>
+   internal class OnPictureListSavedEventArgs
+   {
+      /// <summary>
+      /// Output of the tool when saving data
+      /// </summary>
+      public string Result { get; private set; }
+      /// <summary>
+      /// Constructor
+      /// </summary>
+      /// <param name="output"></param>
+      public OnPictureListSavedEventArgs(string output)
+      {
+         Result = output;
+      }
+   }
+   #endregion
    /// <summary>
    /// This class contains all pictures of a directory 
    /// </summary>
@@ -15,7 +36,20 @@ namespace PicFace.Generic
       private PicasaPictureInfoList _PicasaPictures;
       private ExifPictureInfoList _ExifPictures;
       private Dictionary<string, PictureComparer> _ConsolidatedList;
+      private Dictionary<string, PictureComparer> _ChangesPendingList;
       private string _Path;
+      private string _SaveResult;
+      private int _NumberOfPicturesToSave;
+      /// <summary>
+      /// Delegate for event after data was saved
+      /// </summary>
+      /// <param name="sender">Sender object</param>
+      /// <param name="args">Result of saving</param>
+      public delegate void OnSaved(object sender, OnPictureListSavedEventArgs args);
+      /// <summary>
+      /// Event after data was saved
+      /// </summary>
+      public event OnSaved Saved;
       /// <summary>
       /// Path where the pictures were found
       /// </summary>
@@ -57,6 +91,16 @@ namespace PicFace.Generic
          }
       }
       /// <summary>
+      /// List all pictures with pending changes (Data in picasa and XMP different, needed to save)
+      /// </summary>
+      public Dictionary<string, PictureComparer> ChangesPendingList
+      {
+         get
+         {
+            return _ChangesPendingList;
+         }
+      }
+      /// <summary>
       /// Constructor
       /// </summary>
       /// <param name="path">Path where the pictures are</param>
@@ -67,6 +111,7 @@ namespace PicFace.Generic
          _PicasaPictures = new PicasaPictureInfoList(path, contacts);
          _ExifPictures = new ExifPictureInfoList(path);
          _ConsolidatedList = new Dictionary<string, PictureComparer>();
+         _ChangesPendingList = new Dictionary<string, PictureComparer>();
 
          // add first all picasa pictures
          foreach (KeyValuePair<string, PictureInfo> entry in _PicasaPictures)
@@ -92,7 +137,53 @@ namespace PicFace.Generic
                _ConsolidatedList.Add(entry.Key, pc);
             }
          }
-         
+         // setup the changes pending list
+         foreach (KeyValuePair<string, PictureComparer> kvp in _ConsolidatedList)
+         {
+            if (kvp.Value.ExifUpdateNeeded)
+            {
+               _ChangesPendingList.Add(kvp.Key, kvp.Value);
+            }
+         }
+      }
+      /// <summary>
+      /// Save all changed data
+      /// </summary>
+      public void SaveChangedData()
+      {
+         _SaveResult = "";
+         _NumberOfPicturesToSave = 0;
+         foreach (KeyValuePair<string, PictureComparer> kvp in _ChangesPendingList)
+         {
+            _NumberOfPicturesToSave++;
+            kvp.Value.Saved += new PictureComparer.OnSaved(Value_Saved);
+            kvp.Value.Save();
+         }
+      }
+      /// <summary>
+      /// Value was saved. Collect info, then finish
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="args"></param>
+      void Value_Saved(object sender, OnSavedEventArgs args)
+      {
+         lock (_SaveResult)
+         {
+            PictureComparer pc = sender as PictureComparer;
+            if (pc != null)
+            {
+               _SaveResult += pc.FileName + ":" + Environment.NewLine;
+            }
+            _SaveResult += args.ToolOutput;
+            _NumberOfPicturesToSave--;
+         }
+         if (_NumberOfPicturesToSave == 0)
+         {
+            if (Saved != null)
+            {
+               Saved(this, new OnPictureListSavedEventArgs(_SaveResult));
+            }
+         }
       }
    }
 }

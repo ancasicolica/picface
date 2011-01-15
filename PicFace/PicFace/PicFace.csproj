@@ -52,6 +52,7 @@
     <Compile Include="ExifTool\ExifPictureInfo.cs" />
     <Compile Include="ExifTool\ExifPictureInfoList.cs" />
     <Compile Include="ExifTool\ExifToolPictureData.cs" />
+    <Compile Include="ExifTool\ExifToolThread.cs" />
     <Compile Include="ExifTool\Region.cs" />
     <Compile Include="ExifTool\RegionInfoContainer.cs" />
     <Compile Include="FaceToPictureBox.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Framework\TemporaryFileManager.cs" />
     <Compile Include="Generic\Face.cs" />
     <Compile Include="Generic\FaceList.cs" />
     <Compile Include="Generic\PictureComparer.cs" />

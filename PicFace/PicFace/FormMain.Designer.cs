@@ -37,7 +37,6 @@
          this.aboutPicFaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.tabControlContacts = new System.Windows.Forms.TabControl();
          this.tabPage2 = new System.Windows.Forms.TabPage();
-         this.label1 = new System.Windows.Forms.Label();
          this.listBoxFiles = new System.Windows.Forms.ListBox();
          this.textBoxDirectory = new System.Windows.Forms.TextBox();
          this.labelDirectory = new System.Windows.Forms.Label();
@@ -55,6 +54,15 @@
          this.labelContactsFile = new System.Windows.Forms.Label();
          this.listBoxFilesChanged = new System.Windows.Forms.ListBox();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+         this.groupBoxFilesWithFaces = new System.Windows.Forms.GroupBox();
+         this.groupBoxAllFiles = new System.Windows.Forms.GroupBox();
+         this.listBoxAllFiles = new System.Windows.Forms.ListBox();
+         this.buttonSaveChangedData = new System.Windows.Forms.Button();
+         this.tabPageLog = new System.Windows.Forms.TabPage();
+         this.textBoxLog = new System.Windows.Forms.TextBox();
+         this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
+         this.buttonRefresh = new System.Windows.Forms.Button();
+         this.statusStrip1.SuspendLayout();
          this.menuStrip1.SuspendLayout();
          this.tabControlContacts.SuspendLayout();
          this.tabPage2.SuspendLayout();
@@ -63,10 +71,15 @@
          this.groupBoxPicasa.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
          this.tabPageContacts.SuspendLayout();
+         this.groupBoxFilesWithFaces.SuspendLayout();
+         this.groupBoxAllFiles.SuspendLayout();
+         this.tabPageLog.SuspendLayout();
          this.SuspendLayout();
          // 
          // statusStrip1
          // 
+         this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelInfo});
          this.statusStrip1.Location = new System.Drawing.Point(0, 480);
          this.statusStrip1.Name = "statusStrip1";
          this.statusStrip1.Size = new System.Drawing.Size(670, 22);
@@ -129,6 +142,7 @@
          this.tabControlContacts.Controls.Add(this.tabPage2);
          this.tabControlContacts.Controls.Add(this.tabPage1);
          this.tabControlContacts.Controls.Add(this.tabPageContacts);
+         this.tabControlContacts.Controls.Add(this.tabPageLog);
          this.tabControlContacts.Location = new System.Drawing.Point(168, 24);
          this.tabControlContacts.Name = "tabControlContacts";
          this.tabControlContacts.SelectedIndex = 0;
@@ -137,8 +151,10 @@
          // 
          // tabPage2
          // 
-         this.tabPage2.Controls.Add(this.label1);
-         this.tabPage2.Controls.Add(this.listBoxFiles);
+         this.tabPage2.Controls.Add(this.buttonRefresh);
+         this.tabPage2.Controls.Add(this.buttonSaveChangedData);
+         this.tabPage2.Controls.Add(this.groupBoxAllFiles);
+         this.tabPage2.Controls.Add(this.groupBoxFilesWithFaces);
          this.tabPage2.Controls.Add(this.textBoxDirectory);
          this.tabPage2.Controls.Add(this.labelDirectory);
          this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -148,23 +164,14 @@
          this.tabPage2.Text = "Info";
          this.tabPage2.UseVisualStyleBackColor = true;
          // 
-         // label1
-         // 
-         this.label1.AutoSize = true;
-         this.label1.Location = new System.Drawing.Point(7, 32);
-         this.label1.Name = "label1";
-         this.label1.Size = new System.Drawing.Size(158, 13);
-         this.label1.TabIndex = 5;
-         this.label1.Text = "Files containing face information";
-         // 
          // listBoxFiles
          // 
-         this.listBoxFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)));
+         this.listBoxFiles.Dock = System.Windows.Forms.DockStyle.Fill;
          this.listBoxFiles.FormattingEnabled = true;
-         this.listBoxFiles.Location = new System.Drawing.Point(7, 51);
+         this.listBoxFiles.Location = new System.Drawing.Point(3, 16);
          this.listBoxFiles.Name = "listBoxFiles";
-         this.listBoxFiles.Size = new System.Drawing.Size(200, 368);
+         this.listBoxFiles.Size = new System.Drawing.Size(233, 342);
+         this.listBoxFiles.Sorted = true;
          this.listBoxFiles.TabIndex = 4;
          // 
          // textBoxDirectory
@@ -339,6 +346,89 @@
          this.listBoxFilesChanged.Sorted = true;
          this.listBoxFilesChanged.TabIndex = 2;
          this.listBoxFilesChanged.SelectedIndexChanged += new System.EventHandler(this.listBoxFiles_SelectedIndexChanged);
+         this.listBoxFilesChanged.DoubleClick += new System.EventHandler(this.listBoxFilesChanged_DoubleClick);
+         // 
+         // groupBoxFilesWithFaces
+         // 
+         this.groupBoxFilesWithFaces.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                     | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.groupBoxFilesWithFaces.Controls.Add(this.listBoxFiles);
+         this.groupBoxFilesWithFaces.Location = new System.Drawing.Point(7, 56);
+         this.groupBoxFilesWithFaces.Name = "groupBoxFilesWithFaces";
+         this.groupBoxFilesWithFaces.Size = new System.Drawing.Size(239, 371);
+         this.groupBoxFilesWithFaces.TabIndex = 6;
+         this.groupBoxFilesWithFaces.TabStop = false;
+         this.groupBoxFilesWithFaces.Text = "Files with face information";
+         // 
+         // groupBoxAllFiles
+         // 
+         this.groupBoxAllFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                     | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.groupBoxAllFiles.Controls.Add(this.listBoxAllFiles);
+         this.groupBoxAllFiles.Location = new System.Drawing.Point(247, 56);
+         this.groupBoxAllFiles.Name = "groupBoxAllFiles";
+         this.groupBoxAllFiles.Size = new System.Drawing.Size(239, 371);
+         this.groupBoxAllFiles.TabIndex = 7;
+         this.groupBoxAllFiles.TabStop = false;
+         this.groupBoxAllFiles.Text = "All JPG files found in directory";
+         // 
+         // listBoxAllFiles
+         // 
+         this.listBoxAllFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+         this.listBoxAllFiles.FormattingEnabled = true;
+         this.listBoxAllFiles.Location = new System.Drawing.Point(3, 16);
+         this.listBoxAllFiles.Name = "listBoxAllFiles";
+         this.listBoxAllFiles.Size = new System.Drawing.Size(233, 342);
+         this.listBoxAllFiles.Sorted = true;
+         this.listBoxAllFiles.TabIndex = 4;
+         // 
+         // buttonSaveChangedData
+         // 
+         this.buttonSaveChangedData.Location = new System.Drawing.Point(62, 29);
+         this.buttonSaveChangedData.Name = "buttonSaveChangedData";
+         this.buttonSaveChangedData.Size = new System.Drawing.Size(75, 23);
+         this.buttonSaveChangedData.TabIndex = 8;
+         this.buttonSaveChangedData.Text = "Save Data";
+         this.buttonSaveChangedData.UseVisualStyleBackColor = true;
+         this.buttonSaveChangedData.Click += new System.EventHandler(this.buttonSaveChangedData_Click);
+         // 
+         // tabPageLog
+         // 
+         this.tabPageLog.Controls.Add(this.textBoxLog);
+         this.tabPageLog.Location = new System.Drawing.Point(4, 22);
+         this.tabPageLog.Name = "tabPageLog";
+         this.tabPageLog.Size = new System.Drawing.Size(494, 430);
+         this.tabPageLog.TabIndex = 3;
+         this.tabPageLog.Text = "Log";
+         this.tabPageLog.UseVisualStyleBackColor = true;
+         // 
+         // textBoxLog
+         // 
+         this.textBoxLog.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.textBoxLog.Location = new System.Drawing.Point(0, 0);
+         this.textBoxLog.MaxLength = 327670;
+         this.textBoxLog.Multiline = true;
+         this.textBoxLog.Name = "textBoxLog";
+         this.textBoxLog.Size = new System.Drawing.Size(494, 430);
+         this.textBoxLog.TabIndex = 0;
+         // 
+         // toolStripStatusLabelInfo
+         // 
+         this.toolStripStatusLabelInfo.Name = "toolStripStatusLabelInfo";
+         this.toolStripStatusLabelInfo.Size = new System.Drawing.Size(118, 17);
+         this.toolStripStatusLabelInfo.Text = "toolStripStatusLabel1";
+         // 
+         // buttonRefresh
+         // 
+         this.buttonRefresh.Location = new System.Drawing.Point(143, 29);
+         this.buttonRefresh.Name = "buttonRefresh";
+         this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
+         this.buttonRefresh.TabIndex = 9;
+         this.buttonRefresh.Text = "Refresh";
+         this.buttonRefresh.UseVisualStyleBackColor = true;
+         this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
          // 
          // FormMain
          // 
@@ -354,6 +444,8 @@
          this.Name = "FormMain";
          this.Text = "PicFace";
          this.Load += new System.EventHandler(this.FormMain_Load);
+         this.statusStrip1.ResumeLayout(false);
+         this.statusStrip1.PerformLayout();
          this.menuStrip1.ResumeLayout(false);
          this.menuStrip1.PerformLayout();
          this.tabControlContacts.ResumeLayout(false);
@@ -365,6 +457,10 @@
          ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
          this.tabPageContacts.ResumeLayout(false);
          this.tabPageContacts.PerformLayout();
+         this.groupBoxFilesWithFaces.ResumeLayout(false);
+         this.groupBoxAllFiles.ResumeLayout(false);
+         this.tabPageLog.ResumeLayout(false);
+         this.tabPageLog.PerformLayout();
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -398,7 +494,14 @@
       private System.Windows.Forms.ListBox listBoxFiles;
       private System.Windows.Forms.TextBox textBoxDirectory;
       private System.Windows.Forms.Label labelDirectory;
-      private System.Windows.Forms.Label label1;
+      private System.Windows.Forms.GroupBox groupBoxAllFiles;
+      private System.Windows.Forms.ListBox listBoxAllFiles;
+      private System.Windows.Forms.GroupBox groupBoxFilesWithFaces;
+      private System.Windows.Forms.Button buttonSaveChangedData;
+      private System.Windows.Forms.TabPage tabPageLog;
+      private System.Windows.Forms.TextBox textBoxLog;
+      private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInfo;
+      private System.Windows.Forms.Button buttonRefresh;
    }
 }
 

@@ -21,7 +21,6 @@ namespace PicFace.ExifTool
       public string Directory { get; set; }
       public RegionInfoContainer RegionInfo { get; set; }
 
-
       /// <summary>
       /// Collects all ExifToolPictureData (raw data) in a path and returns an array with it
       /// </summary>
@@ -68,5 +67,6 @@ namespace PicFace.ExifTool
             }
          }
       }
+
    }
 }

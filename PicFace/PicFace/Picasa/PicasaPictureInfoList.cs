@@ -80,7 +80,7 @@ namespace PicFace.Picasa
                               }
                               float x = (float)Convert.ToInt32(rectInfo.Substring(0, 4), 16) / 0xffff;
                               float y = (float)Convert.ToInt32(rectInfo.Substring(4, 4), 16) / 0xffff;
-                             
+
                               float w = (float)Convert.ToInt32(rectInfo.Substring(8, 4), 16) / 0xffff;
                               float h = (float)Convert.ToInt32(rectInfo.Substring(12, 4), 16) / 0xffff;
 
@@ -91,10 +91,19 @@ namespace PicFace.Picasa
                               RectangleF rect = new RectangleF(x, y, w, h);
 
                               PicasaFace f = new PicasaFace(contacts[id], rect);
-                              currentPic.Faces.Add(f.Name, f);
+                              if (!currentPic.Faces.ContainsKey(f.Name))
+                              {
+                                 currentPic.Faces.Add(f.Name, f);
+                                 Debug.WriteLine(currentPic.FileName + ", Known one: " + f.Name, "PicasaPictureInfoList");
+                              }
+                              else
+                              {
+                                 Debug.WriteLine(currentPic.FileName + ", Name found twice: " + f.Name);
+                              }
                            }
                            else
                            {  // we don't know this one!
+                              Debug.WriteLine(currentPic.FileName + ", Unkown one: " + id, "PicasaPictureInfoList");
                               currentPic.UnkownFaceFound();
                            }
                         }
@@ -102,6 +111,7 @@ namespace PicFace.Picasa
                   }
                }
             }
+         
 
          }
          catch (Exception ex)

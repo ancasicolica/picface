@@ -31,6 +31,19 @@ namespace PicFace
          }
          set
          {
+            try
+            {
+               if (_Image != null)
+               {
+                  _Image.Dispose();
+               }
+               if (_Graphics != null)
+               {
+                  _Graphics.Dispose();
+               }
+            }
+            catch
+            { }
             _FileName = value;
             _Image = Image.FromFile(_FileName);
             _PictureBox.Image = _Image;
@@ -60,6 +73,21 @@ namespace PicFace
 
          _Graphics.DrawRectangle(_RectanglePen, x,y,w,h);
          _PictureBox.Refresh();
+      }
+      /// <summary>
+      /// Releases all picture Data so the file is free for saving data
+      /// </summary>
+      public void ReleasePicture()
+      {
+         if (_Image != null)
+         {
+            _Image.Dispose();
+         }
+         if (_Graphics != null)
+         {
+            _Graphics.Dispose();
+         }
+         _PictureBox.Image = null;
       }
    }
 }
