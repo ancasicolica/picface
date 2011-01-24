@@ -53,16 +53,22 @@ namespace PicFace.ExifTool
          {
             try
             {
-               string[] rect = r.Rectangle.Split(new char[] { ',' });
-               float x, y, w, h;
-               x = Convert.ToSingle(rect[0]);
-               y = Convert.ToSingle(rect[1]);
-               w = Convert.ToSingle(rect[2]);
-               h = Convert.ToSingle(rect[3]);
-               Face f = new Face(r.PersonConvertedName, new RectangleF(x, y, w, h));
-               if (f.Name != null && !f.Name.Equals("ffffffffffffffff"))
-               {
-                  Faces.Add(f.Name, f);
+               if (r.Rectangle != null)
+               { // if only a name but not a rectangle is in xmp, it is null! -> ignore
+                  string[] rect = r.Rectangle.Split(new char[] { ',' });
+                  float x, y, w, h;
+                  x = Convert.ToSingle(rect[0]);
+                  y = Convert.ToSingle(rect[1]);
+                  w = Convert.ToSingle(rect[2]);
+                  h = Convert.ToSingle(rect[3]);
+                  Face f = new Face(r.PersonConvertedName, new RectangleF(x, y, w, h));
+                  if (f.Name != null && !f.Name.Equals("ffffffffffffffff") && f.Name.Length > 1)
+                  {
+                     if (!Faces.ContainsKey(f.Name))
+                     {
+                        Faces.Add(f.Name, f);
+                     }
+                  }
                }
             }
             catch

@@ -77,6 +77,10 @@ namespace PicFace.Generic
       private FaceList _OnlyInExif;
       private FaceList _RegionMismatch;
       /// <summary>
+      /// The data which will be written
+      /// </summary>
+      private FaceList _WriteData;
+      /// <summary>
       /// The Picasa Part of the Information
       /// </summary>
       public PicasaPictureInfo PicasaInfo {get; set;}
@@ -96,13 +100,16 @@ namespace PicFace.Generic
                return "";
             }
             string s = "";
-            foreach (KeyValuePair<string, Face> kvp in PicasaInfo.Faces)
+            foreach (KeyValuePair<string, Face> kvp in _WriteData)
             {
                Face f = kvp.Value;
-               s += "-xmp-mp:RegionPersonDisplayName=" + f.Name + Environment.NewLine;
-               s += "-xmp-mp:RegionRectangle=" + f.Rect.X.ToString("0.00000000") + ", " +
-                  f.Rect.Y.ToString("0.00000000") + ", " + f.Rect.Width.ToString("0.00000000") + ", " +
-                  f.Rect.Height.ToString("0.00000000") +   Environment.NewLine;
+               if (f.Name.Length > 0)
+               {
+                  s += "-xmp-mp:RegionPersonDisplayName=" + f.Name + Environment.NewLine;
+                  s += "-xmp-mp:RegionRectangle=" + f.Rect.X.ToString("0.00000000") + ", " +
+                     f.Rect.Y.ToString("0.00000000") + ", " + f.Rect.Width.ToString("0.00000000") + ", " +
+                     f.Rect.Height.ToString("0.00000000") + Environment.NewLine;
+               }
             }
             return s;
          }
@@ -244,6 +251,7 @@ namespace PicFace.Generic
          _OnlyInPicasa = new FaceList();
          _OnlyInExif = new FaceList();
          _RegionMismatch = new FaceList();
+         _WriteData = new FaceList();
 
          // 1) if there are faces in Picasa and none in exif: copy all
          // 2) if there are none in Picasa and some in exif: do nothing
@@ -256,6 +264,7 @@ namespace PicFace.Generic
             {
                _DeltaList.Add(kp.Key, kp.Value);
                _OnlyInPicasa.Add(kp.Key, kp.Value);
+               _WriteData.Add(kp.Key, kp.Value);
             }
             return true;
          }
@@ -265,6 +274,7 @@ namespace PicFace.Generic
             foreach (KeyValuePair<string, Face> kp in ExifInfo.Faces)
             {
                _OnlyInExif.Add(kp.Key, kp.Value);
+               _WriteData.Add(kp.Key, kp.Value);
             }
             return false;
          }
@@ -272,84 +282,150 @@ namespace PicFace.Generic
          foreach (KeyValuePair<string, Face> kp in PicasaInfo.Faces)
          {
             if (!ExifInfo.Faces.ContainsKey(kp.Key))
-            { // in Picasa but not in exif
+            {  // name was found in Picasa but not in exif. But what if it was
+               // renamed in picasa? we add it here, but we have to check it
+               // when reading exiftool data later on
                _DeltaList.Add(kp.Key, kp.Value);
                _OnlyInPicasa.Add(kp.Key, kp.Value);
+               _WriteData.Add(kp.Key, kp.Value);
             }
             else
             { // how about the region?
                if (!CompareRectangle(kp.Value.Rect, ExifInfo.Faces[kp.Key].Rect))
                {
-                  _RegionMismatch.Add(kp.Key, kp.Value);
+                  if (_RegionMismatch.ContainsKey(kp.Key))
+                  {
+                     _RegionMismatch.Add(kp.Key, kp.Value);
+                  }
+                  else
+                  {
+                     _WriteData.Add(kp.Key, kp.Value);
+                  }
+               }
+               else
+               { // is the same, so add to "write data" (otherwise we loose this info)
+                  _WriteData.Add(kp.Key, kp.Value);
                }
             }
          }
          foreach (KeyValuePair<string, Face> kp in ExifInfo.Faces)
          {
             if (!PicasaInfo.Faces.ContainsKey(kp.Key))
-            { // in Picasa but not in exif
-               _DeltaList.Add(kp.Key, kp.Value);
-               _OnlyInExif.Add(kp.Key, kp.Value);
+            {  // Name in Exif but not in Picasa. As picasa has the higher priority,
+               // we have to check whether the region is already used or not
+               bool found = false;
+               foreach (KeyValuePair<string, Face> alreadyHere in _WriteData)
+               {
+                  if (CompareRectangle(alreadyHere.Value.Rect, kp.Value.Rect, 10))
+                  { // yes, it is here! Ignore this one
+                     found = true;
+                     break;
+                  }
+               }
+               if (!found)
+               {
+                  _DeltaList.Add(kp.Key, kp.Value);
+                  _OnlyInExif.Add(kp.Key, kp.Value);
+                  _WriteData.Add(kp.Key, kp.Value);
+               }
+               else
+               {
+                  _DeltaList.Add(kp.Key, kp.Value);
+               }
             }
             else
             { // region?
                if (!CompareRectangle(kp.Value.Rect, PicasaInfo.Faces[kp.Key].Rect))
                {
-                  if (!_RegionMismatch.ContainsKey(kp.Key))
+                  if (_RegionMismatch.ContainsKey(kp.Key))
                   {
-                    _RegionMismatch.Add(kp.Key, kp.Value);
+                     _RegionMismatch.Add(kp.Key, kp.Value);
+                  }
+                  else
+                  {
+                     _WriteData.Add(kp.Key, kp.Value);
+                  }
+               }
+               else
+               { // is the same, so add to "write data" (otherwise we loose this info)
+                  if (!_WriteData.ContainsKey(kp.Key))
+                  {
+                     _WriteData.Add(kp.Key, kp.Value);
                   }
                }
             }
          }
-         return _DeltaList.Count > 0;
+         return _WriteData.Count > 0;
       }
       /// <summary>
       /// Compares two rectangles
+      /// </summary>
+      /// <param name="r1">Rectangle 1</param>
+      /// <param name="r2">Rectangle 2</param>
+      /// <param name="tolerance">Tolerance in 0/00 (promille)</param>
+      /// <returns>true if the rectangles fit, otherwise false</returns>
+      private bool CompareRectangle(RectangleF r1, RectangleF r2, ulong tolerance)
+      {
+         ulong factor = 100000000;
+
+         // Due to debugging and statistic purposes, all values are held as variables.
+         // I know there are "better" solutions, but the JIT makes the best of it.
+         ulong x1 = (ulong)(r1.X * factor);
+         ulong x1Min = x1 * (1000UL - tolerance);
+         ulong x1Max = x1 * (1000UL + tolerance);
+         ulong y1 = (ulong)(r1.Y * factor);
+         ulong y1Min = y1 * (1000UL - tolerance);
+         ulong y1Max = y1 * (1000UL + tolerance);
+         ulong w1 = (ulong)(r1.Width * factor);
+         ulong w1Min = w1 * (1000UL - tolerance);
+         ulong w1Max = w1 * (1000UL + tolerance);
+         ulong h1 = (ulong)(r1.Height * factor);
+         ulong h1Min = h1 * (1000UL - tolerance);
+         ulong h1Max = h1 * (1000UL + tolerance);
+
+         ulong x2 = (ulong)(r2.X * factor);
+         ulong x2Ref = x2 * 1000;
+         ulong y2 = (ulong)(r2.Y * factor);
+         ulong y2Ref = y2 * 1000;
+         ulong w2 = (ulong)(r2.Width * factor);
+         ulong w2Ref = w2 * 1000;
+         ulong h2 = (ulong)(r2.Height * factor);
+         ulong h2Ref = h2 * 1000;
+
+         if (!(x1Max > x2Ref) && (x1Min < x2Ref))
+         {
+            Debug.WriteLine(string.Format("Mismatch in X for {0}: {1} vs {2}, difference {3}%",this.FileName, r1.X,r2.X,r1.X / r2.X * 100));
+            return false;
+         }
+
+         if (!(y1Max > y2Ref) && (y1Min < y2Ref))
+         {
+            Debug.WriteLine(string.Format("Mismatch in Y for {0}: {1} vs {2}, difference {3}%", this.FileName, r1.Y, r2.Y, r1.Y / r2.Y * 100));
+            return false;
+         }
+
+         if (!(h1Max > h2Ref) && (h1Min < h2Ref))
+         {
+            Debug.WriteLine(string.Format("Mismatch in Height for {0}: {1} vs {2}, difference {3}%", this.FileName, r1.Height, r2.Height, r1.Height / r2.Height * 100));
+            return false;
+         }
+
+         if (!(w1Max > w2Ref) && (w1Min < w2Ref))
+         {
+            Debug.WriteLine(string.Format("Mismatch in Width for {0}: {1} vs {2}, difference {3}%", this.FileName, r1.Width, r2.Width, r1.Width / r2.Width * 100));
+            return false;
+         }
+         return true;
+      }
+      /// <summary>
+      /// Compares two rectangles with default tolerance
       /// </summary>
       /// <param name="r1">rectangle 1</param>
       /// <param name="r2">rectangle 2</param>
       /// <returns>true if the rectangles are the same (with a certain tolerance)</returns>
       private bool CompareRectangle(RectangleF r1, RectangleF r2)
       {
-         int factor = 100000000;
-         int tolerance = 1; // in promille
-
-         int x1 = (int)(r1.X * factor);
-         int y1 = (int)(r1.Y * factor);
-         int w1 = (int)(r1.Width * factor);
-         int h1 = (int)(r1.Height * factor);
-
-
-         int x2 = (int)(r2.X * factor);
-         int y2 = (int)(r2.Y * factor);
-         int w2 = (int)(r2.Width * factor);
-         int h2 = (int)(r2.Height * factor);
-
-         if (!((x1 * (1000 + tolerance) > x2 * 1000) && (x1 * (1000 - tolerance)) < (x2 * 1000)))
-         {
-            Debug.WriteLine("Mismatch in X", this.ToString());
-            return false;
-         }
-
-         if (!((y1 * (1000 + tolerance) > y2 * 1000) && (y1 * (1000 - tolerance)) < (y2 * 1000)))
-         {
-            Debug.WriteLine("Mismatch in Y", this.ToString());
-            return false;
-         }
-
-         if (!((h1 * (1000 + tolerance) > h2 * 1000) && (h1 * (1000 - tolerance)) < (h2 * 1000)))
-         {
-            Debug.WriteLine("Mismatch in H", this.ToString());
-            return false;
-         }
-
-         if (!((w1 * (1000 + tolerance) > w2 * 1000) && (w1 * (1000 - tolerance)) < (w2 * 1000)))
-         {
-            Debug.WriteLine("Mismatch in W", this.ToString());
-            return false;
-         }
-         return true;
+         return CompareRectangle(r1, r2, 5);
       }
       /// <summary>
       /// Saves the data
@@ -364,12 +440,14 @@ namespace PicFace.Generic
          }
 
          string cmd = "-preserve" + Environment.NewLine;
-         cmd += "-xmp-mp:RegionPersonDisplayName= " + Environment.NewLine+ ExifToolChangeString;
-
+         cmd += "-xmp-mp:ALL= " + Environment.NewLine;
+         cmd += ExifToolChangeString + Environment.NewLine;
+        
          ExifToolThread exifTool = new ExifToolThread(cmd , FullFileName);
          exifTool.Finished += new ExifToolThread.OnFinished(exifTool_Finished);
          exifTool.Start();
-
+        
+         Debug.WriteLine(this.FileName + ": " + cmd);
          return true;
       }
       /// <summary>

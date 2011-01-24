@@ -1,5 +1,9 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
+using PicFace.Framework;
 /************************************************************************************/
 /*
       PicFace - Writes Picasa face information to XMP 
@@ -26,10 +30,6 @@ using System.IO;
        and/or fitness for purpose. 
 */
 /************************************************************************************/
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
-using PicFace.Framework;
 
 namespace PicFace.ExifTool
 {
@@ -94,6 +94,7 @@ namespace PicFace.ExifTool
          _Arguments = arguments;
          _ArgumentsFile = TemporaryFileManager.CreateNextFile(arguments);
          _FileName = filename;
+         Debug.WriteLine("File: " + filename + ", TempFileName: " + _ArgumentsFile, "ExifToolThread");
       }
       /// <summary>
       /// Start exif tool
@@ -135,6 +136,7 @@ namespace PicFace.ExifTool
             errorOutput += errorReader.ReadToEnd();
             toolOutput += streamReader.ReadToEnd();
             Debug.WriteLine(errorOutput);
+            // give other processes a chance
             Thread.Sleep(20);
          }
          while (!streamReader.EndOfStream && !errorReader.EndOfStream);
