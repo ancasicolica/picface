@@ -55,8 +55,21 @@ namespace PicFace.Picasa
       {
          try
          {
+            string picasaFileName = @".picasa.ini"; // this is the default
+            if (!File.Exists(Path.Combine(path, picasaFileName)))
+            { // is there an older one?
+               if (File.Exists(Path.Combine(path, @"Picasa.ini")))
+               {
+                  picasaFileName = @"Picasa.ini";
+               }
+               else
+               {
+                  Debug.WriteLine("No Picasa INI File found in " + path);
+                  return;
+               }
+            }
             // Read Picasa File
-            using (StreamReader sr = new StreamReader(Path.Combine(path, @".picasa.ini")))
+            using (StreamReader sr = new StreamReader(Path.Combine(path, picasaFileName)))
             {
                PicasaPictureInfo currentPic = null;
                string line;

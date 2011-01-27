@@ -101,15 +101,17 @@ namespace PicFace.ExifTool
          streamReader.Close();
 
          ExifToolPictureData[] imageData = JsonConvert.DeserializeObject<ExifToolPictureData[]>(jsonData);
-
-         foreach (ExifToolPictureData etp in imageData)
+         if (imageData != null)
          {
-            if (etp.RegionInfo != null)
+            foreach (ExifToolPictureData etp in imageData)
             {
-               ExifPictureInfo info = new ExifPictureInfo(etp);
-               if (info.Faces != null && info.Faces.Count > 0)
-               {  // add only pictures with faces in it!
-                  list.Add(info.FileName.ToUpper(), info);
+               if (etp.RegionInfo != null)
+               {
+                  ExifPictureInfo info = new ExifPictureInfo(etp);
+                  if (info.Faces != null && info.Faces.Count > 0)
+                  {  // add only pictures with faces in it!
+                     list.Add(info.FileName.ToUpper(), info);
+                  }
                }
             }
          }

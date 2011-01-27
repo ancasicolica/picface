@@ -143,6 +143,30 @@ namespace PicFace
          }
       }
       /// <summary>
+      /// Change the directory
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void buttonChangeDirectory_Click(object sender, EventArgs e)
+      {
+         if (textBoxDirectory.Text.Length > 0)
+         {  // name is here, use this one
+            folderBrowserDialog1.SelectedPath = textBoxDirectory.Text;
+            DialogResult res = folderBrowserDialog1.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+               _CurrentDirectory = folderBrowserDialog1.SelectedPath;
+               textBoxDirectory.Text = _CurrentDirectory;
+
+               LoadPictureIndex();
+            }
+         }
+         else
+         {  // go to myPictures
+            selectDirectoryInMyPicturesToolStripMenuItem_Click(this, e);
+         }
+      }
+      /// <summary>
       /// Select any Directory
       /// </summary>
       /// <param name="sender"></param>
@@ -167,32 +191,7 @@ namespace PicFace
          toolStripStatusLabelInfo.Text = "Loading pictures";
          _PictureList = new PictureList(_CurrentDirectory, _Contacts);
          _PictureList.Saved += new PictureList.OnSaved(_PictureList_Saved);
-         // all files found
-         listBoxAllFiles.Items.Clear();
-         listBoxFiles.Items.Clear();
-         listBoxFilesChanged.Items.Clear();
-
-         DirectoryInfo dirInfo = new DirectoryInfo(_CurrentDirectory);
-         foreach (FileInfo f in dirInfo.GetFiles("*.jpg"))
-         {
-            if (f.Name.ToLower().EndsWith("jpg"))
-            {
-               listBoxAllFiles.Items.Add(f);
-            }
-         }
-
-         // all changed files
-         listBoxFilesChanged.Items.Clear();
-         foreach (KeyValuePair<string, PictureComparer> p in _PictureList.ConsolidatedList)
-         {
-            listBoxFiles.Items.Add(p.Value);
-
-            if (p.Value.ExifUpdateNeeded)
-            {
-               listBoxFilesChanged.Items.Add(p.Value);
-               Debug.WriteLine(p.Value.ExifToolChangeString);
-            }
-         }
+         FillListBoxFiles();
       }
       /// <summary>
       /// Event when Picture List was saved
@@ -231,6 +230,7 @@ namespace PicFace
             // Add all faces to the found faces list boxes
             listBoxPersonsFound.Items.Clear();
             listBoxPersonsFoundXmp.Items.Clear();
+            listBoxResult.Items.Clear();
 
             if (p.PicasaInfo != null)
             {
@@ -244,6 +244,13 @@ namespace PicFace
                foreach (KeyValuePair<string, Face> kp in p.ExifInfo.Faces)
                {
                   listBoxPersonsFoundXmp.Items.Add(kp.Value);
+               }
+            }
+            if (p.WriteData != null)
+            {
+               foreach (KeyValuePair<string, Face> kp in p.WriteData)
+               {
+                  listBoxResult.Items.Add(kp.Value);
                }
             }
          }
@@ -307,6 +314,65 @@ namespace PicFace
       private void buttonRefresh_Click(object sender, EventArgs e)
       {
          LoadPictureIndex();
+      }
+      /// <summary>
+      /// Menu: show all files with face information
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void allFilesToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         allFilesToolStripMenuItem.Checked = true;
+         filesWithChangedFaceInformationToolStripMenuItem.Checked = false;
+         FillListBoxFiles();
+      }
+      /// <summary>
+      /// Menu: show only changed files
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void filesWithChangedFaceInformationToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         allFilesToolStripMenuItem.Checked = false;
+         filesWithChangedFaceInformationToolStripMenuItem.Checked = true;
+         FillListBoxFiles();
+      }
+      /// <summary>
+      /// Fills the listbox with the files
+      /// </summary>
+      private void FillListBoxFiles()
+      {
+         int allPicsWithFacesNb = 0;
+         int updateNeededNb = 0;
+
+         // clear list
+         listBoxFilesChanged.Items.Clear();
+
+         // all changed files
+         listBoxFilesChanged.Items.Clear();
+         foreach (KeyValuePair<string, PictureComparer> p in _PictureList.ConsolidatedList)
+         {
+            allPicsWithFacesNb++;
+
+            if (allFilesToolStripMenuItem.Checked)
+            {
+               listBoxFilesChanged.Items.Add(p.Value);
+            }
+            if (p.Value.ExifUpdateNeeded)
+            {
+               updateNeededNb++;
+               if (filesWithChangedFaceInformationToolStripMenuItem.Checked)
+               {
+                  listBoxFilesChanged.Items.Add(p.Value);
+                  Debug.WriteLine(p.Value.ExifToolChangeString);
+               }
+            }
+         }
+         labelPicsWithFaceInfoNb.Text = allPicsWithFacesNb.ToString();
+         labelPicturesWithChangedInformationNb.Text = updateNeededNb.ToString();
+
+         DirectoryInfo dirInfo = new DirectoryInfo(_PictureList.Path);
+         labelTotalPicsNb.Text = dirInfo.GetFiles("*.jpg").Length.ToString();
       }
 
    }

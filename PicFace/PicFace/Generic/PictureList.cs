@@ -181,6 +181,7 @@ namespace PicFace.Generic
             _NumberOfPicturesToSave++;
             kvp.Value.Saved += new PictureComparer.OnSaved(Value_Saved);
             kvp.Value.Save();
+
          }
       }
       /// <summary>

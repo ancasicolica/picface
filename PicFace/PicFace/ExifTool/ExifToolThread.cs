@@ -143,6 +143,10 @@ namespace PicFace.ExifTool
          streamReader.Close();
          errorReader.Close();
 
+         Debug.WriteLine("ExifTool Result for " + this._FileName);
+         Debug.WriteLine(toolOutput);
+         Debug.WriteLine(errorOutput);
+
          if (Finished != null)
          {
             Finished(this, new FinishedEventArgs(toolOutput, errorOutput));

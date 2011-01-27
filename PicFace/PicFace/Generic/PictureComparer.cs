@@ -30,6 +30,7 @@ using System.Diagnostics;
 using System.Drawing;
 using PicFace.ExifTool;
 using PicFace.Picasa;
+using System.Threading;
 
 namespace PicFace.Generic
 {
@@ -88,6 +89,16 @@ namespace PicFace.Generic
       /// The Exif Part of the Information
       /// </summary>
       public ExifPictureInfo ExifInfo {get; set;}
+      /// <summary>
+      /// The List with the data to write
+      /// </summary>
+      public FaceList WriteData
+      {
+         get
+         {
+            return _WriteData;
+         }
+      }
       /// <summary>
       /// The string needed for exif tool to set the settings from picasa
       /// </summary>
@@ -179,7 +190,7 @@ namespace PicFace.Generic
          {
             if (ExifInfoMissing && !PicasaInfoMissing)
             {
-               return true;
+               return (PicasaInfo.Faces.Count > 0);
             }
             return _DeltaList.Count > 0;
          }
@@ -239,7 +250,12 @@ namespace PicFace.Generic
       /// <returns></returns>
       public override string ToString()
       {
-         return FileName + " Update: " + this.ExifUpdateNeeded.ToString();
+         string retVal = FileName;
+         if (this.ExifUpdateNeeded)
+         {
+            return retVal + " (*)";
+         }
+         return retVal;
       }
       /// <summary>
       /// Check the Pictures, if delta is found, set it to DeltaList
@@ -265,6 +281,7 @@ namespace PicFace.Generic
                _DeltaList.Add(kp.Key, kp.Value);
                _OnlyInPicasa.Add(kp.Key, kp.Value);
                _WriteData.Add(kp.Key, kp.Value);
+               Debug.WriteLine("No XMP Info read with exiftool", this.FileName);
             }
             return true;
          }
@@ -275,6 +292,7 @@ namespace PicFace.Generic
             {
                _OnlyInExif.Add(kp.Key, kp.Value);
                _WriteData.Add(kp.Key, kp.Value);
+               Debug.WriteLine("XMP Info available but none from Picasa", this.FileName);
             }
             return false;
          }
@@ -287,6 +305,7 @@ namespace PicFace.Generic
                // when reading exiftool data later on
                _DeltaList.Add(kp.Key, kp.Value);
                _OnlyInPicasa.Add(kp.Key, kp.Value);
+               Debug.WriteLine("Found in Picasa but not in XMP", this.FileName);
                _WriteData.Add(kp.Key, kp.Value);
             }
             else
@@ -299,11 +318,13 @@ namespace PicFace.Generic
                   }
                   else
                   {
+                     Debug.WriteLine("Rectangle mismatch", this.FileName);
                      _WriteData.Add(kp.Key, kp.Value);
                   }
                }
                else
                { // is the same, so add to "write data" (otherwise we loose this info)
+                  Debug.WriteLine("Same in Picasa and XMP", this.FileName);
                   _WriteData.Add(kp.Key, kp.Value);
                }
             }
@@ -324,9 +345,9 @@ namespace PicFace.Generic
                }
                if (!found)
                {
-                  _DeltaList.Add(kp.Key, kp.Value);
                   _OnlyInExif.Add(kp.Key, kp.Value);
                   _WriteData.Add(kp.Key, kp.Value);
+                  Debug.WriteLine("Found in XMP but not in Picasa", this.FileName);
                }
                else
                {
@@ -343,13 +364,17 @@ namespace PicFace.Generic
                   }
                   else
                   {
-                     _WriteData.Add(kp.Key, kp.Value);
+                     if (!_WriteData.ContainsKey(kp.Key))
+                     {
+                        _WriteData.Add(kp.Key, kp.Value);
+                     }
                   }
                }
                else
                { // is the same, so add to "write data" (otherwise we loose this info)
                   if (!_WriteData.ContainsKey(kp.Key))
                   {
+                     Debug.WriteLine("Same in Picasa and XMP", this.FileName);
                      _WriteData.Add(kp.Key, kp.Value);
                   }
                }
@@ -364,53 +389,53 @@ namespace PicFace.Generic
       /// <param name="r2">Rectangle 2</param>
       /// <param name="tolerance">Tolerance in 0/00 (promille)</param>
       /// <returns>true if the rectangles fit, otherwise false</returns>
-      private bool CompareRectangle(RectangleF r1, RectangleF r2, ulong tolerance)
+      private bool CompareRectangle(RectangleF r1, RectangleF r2, long tolerance)
       {
-         ulong factor = 100000000;
+         long factor = 100000000;
 
          // Due to debugging and statistic purposes, all values are held as variables.
          // I know there are "better" solutions, but the JIT makes the best of it.
-         ulong x1 = (ulong)(r1.X * factor);
-         ulong x1Min = x1 * (1000UL - tolerance);
-         ulong x1Max = x1 * (1000UL + tolerance);
-         ulong y1 = (ulong)(r1.Y * factor);
-         ulong y1Min = y1 * (1000UL - tolerance);
-         ulong y1Max = y1 * (1000UL + tolerance);
-         ulong w1 = (ulong)(r1.Width * factor);
-         ulong w1Min = w1 * (1000UL - tolerance);
-         ulong w1Max = w1 * (1000UL + tolerance);
-         ulong h1 = (ulong)(r1.Height * factor);
-         ulong h1Min = h1 * (1000UL - tolerance);
-         ulong h1Max = h1 * (1000UL + tolerance);
+         long x1 = (long)(r1.X * factor);
+         long x1Min = x1 * (1000L - tolerance) - 1;
+         long x1Max = x1 * (1000L + tolerance) + 1;
+         long y1 = (long)(r1.Y * factor);
+         long y1Min = y1 * (1000L - tolerance) - 1;
+         long y1Max = y1 * (1000L + tolerance) + 1;
+         long w1 = (long)(r1.Width * factor);
+         long w1Min = w1 * (1000L - tolerance) - 1;
+         long w1Max = w1 * (1000L + tolerance) + 1;
+         long h1 = (long)(r1.Height * factor);
+         long h1Min = h1 * (1000L - tolerance) - 1;
+         long h1Max = h1 * (1000L + tolerance) + 1;
 
-         ulong x2 = (ulong)(r2.X * factor);
-         ulong x2Ref = x2 * 1000;
-         ulong y2 = (ulong)(r2.Y * factor);
-         ulong y2Ref = y2 * 1000;
-         ulong w2 = (ulong)(r2.Width * factor);
-         ulong w2Ref = w2 * 1000;
-         ulong h2 = (ulong)(r2.Height * factor);
-         ulong h2Ref = h2 * 1000;
+         long x2 = (long)(r2.X * factor);
+         long x2Ref = x2 * 1000;
+         long y2 = (long)(r2.Y * factor);
+         long y2Ref = y2 * 1000;
+         long w2 = (long)(r2.Width * factor);
+         long w2Ref = w2 * 1000;
+         long h2 = (long)(r2.Height * factor);
+         long h2Ref = h2 * 1000;
 
-         if (!(x1Max > x2Ref) && (x1Min < x2Ref))
+         if (!((x1Max > x2Ref) && (x1Min < x2Ref)))
          {
             Debug.WriteLine(string.Format("Mismatch in X for {0}: {1} vs {2}, difference {3}%",this.FileName, r1.X,r2.X,r1.X / r2.X * 100));
             return false;
          }
 
-         if (!(y1Max > y2Ref) && (y1Min < y2Ref))
+         if (!((y1Max > y2Ref) && (y1Min < y2Ref)))
          {
             Debug.WriteLine(string.Format("Mismatch in Y for {0}: {1} vs {2}, difference {3}%", this.FileName, r1.Y, r2.Y, r1.Y / r2.Y * 100));
             return false;
          }
 
-         if (!(h1Max > h2Ref) && (h1Min < h2Ref))
+         if (!((h1Max > h2Ref) && (h1Min < h2Ref)))
          {
             Debug.WriteLine(string.Format("Mismatch in Height for {0}: {1} vs {2}, difference {3}%", this.FileName, r1.Height, r2.Height, r1.Height / r2.Height * 100));
             return false;
          }
 
-         if (!(w1Max > w2Ref) && (w1Min < w2Ref))
+         if (!((w1Max > w2Ref) && (w1Min < w2Ref)))
          {
             Debug.WriteLine(string.Format("Mismatch in Width for {0}: {1} vs {2}, difference {3}%", this.FileName, r1.Width, r2.Width, r1.Width / r2.Width * 100));
             return false;
@@ -436,6 +461,7 @@ namespace PicFace.Generic
          if (ExifToolChangeString.Length == 0)
          {
             Debug.WriteLine("Nothing to save", this.ToString());
+            Timer delayTimer = new Timer(new TimerCallback(DelayTimer), this, 200, Timeout.Infinite);
             return false;
          }
 
@@ -449,6 +475,15 @@ namespace PicFace.Generic
         
          Debug.WriteLine(this.FileName + ": " + cmd);
          return true;
+      }
+      /// <summary>
+      /// Delay timer, put the event for a file which is not to be changed in another thread
+      /// </summary>
+      /// <param name="state"></param>
+      private void DelayTimer(object state)
+      {
+         PictureComparer p = state as PictureComparer;
+         p.exifTool_Finished(p, new FinishedEventArgs("Nothing saved", ""));
       }
       /// <summary>
       /// One exiftool finished, shot event when registerd
