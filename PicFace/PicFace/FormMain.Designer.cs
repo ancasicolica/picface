@@ -103,8 +103,8 @@
          // 
          this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.viewToolStripMenuItem});
+            this.viewToolStripMenuItem,
+            this.toolStripMenuItem1});
          this.menuStrip1.Location = new System.Drawing.Point(0, 0);
          this.menuStrip1.Name = "menuStrip1";
          this.menuStrip1.Size = new System.Drawing.Size(670, 24);
@@ -145,8 +145,9 @@
          // aboutPicFaceToolStripMenuItem
          // 
          this.aboutPicFaceToolStripMenuItem.Name = "aboutPicFaceToolStripMenuItem";
-         this.aboutPicFaceToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+         this.aboutPicFaceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
          this.aboutPicFaceToolStripMenuItem.Text = "About PicFace";
+         this.aboutPicFaceToolStripMenuItem.Click += new System.EventHandler(this.aboutPicFaceToolStripMenuItem_Click);
          // 
          // viewToolStripMenuItem
          // 
@@ -295,6 +296,8 @@
          // 
          // textBoxDirectory
          // 
+         this.textBoxDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
          this.textBoxDirectory.Location = new System.Drawing.Point(62, 3);
          this.textBoxDirectory.Name = "textBoxDirectory";
          this.textBoxDirectory.ReadOnly = true;

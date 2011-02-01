@@ -31,6 +31,7 @@ using System.IO;
 using System.Windows.Forms;
 using PicFace.Generic;
 using PicFace.Picasa;
+using PicFace.Framework;
 
 namespace PicFace
 {
@@ -71,10 +72,19 @@ namespace PicFace
       /// <param name="e"></param>
       private void FormMain_Load(object sender, EventArgs e)
       {
+         // save states
+         new WindowProperties(this);
+
          // Refresh contacts first
          buttonRefreshContacts_Click(sender, e);
          _FaceVisualiser = new FaceToPictureBox(pictureBoxPreview);
          toolStripStatusLabelInfo.Text = "";
+
+         // update the file list settings
+         bool onlyChanged = (PicFaceConfig.FileView == PicFaceConfig.FileViewSettings.OnlyChanged);
+         allFilesToolStripMenuItem.Checked = !onlyChanged;
+         filesWithChangedFaceInformationToolStripMenuItem.Checked = onlyChanged;
+
 #if DEBUG
          //// ###############
          _CurrentDirectory = @"C:\Users\Christian\Pictures\Tests";
@@ -188,8 +198,11 @@ namespace PicFace
       /// </summary>
       private void LoadPictureIndex()
       {
-         toolStripStatusLabelInfo.Text = "Loading pictures";
-         _PictureList = new PictureList(_CurrentDirectory, _Contacts);
+         // toolStripStatusLabelInfo.Text = "Loading pictures";
+         // show the "please wait dialog" and get the results from it
+         FormWaitLoading fwl = new FormWaitLoading(_CurrentDirectory, _Contacts);
+         fwl.ShowDialog();
+         _PictureList = fwl.Pictures;
          _PictureList.Saved += new PictureList.OnSaved(_PictureList_Saved);
          FillListBoxFiles();
       }
@@ -265,7 +278,7 @@ namespace PicFace
          PictureComparer p = listBoxFilesChanged.SelectedItem as PictureComparer;
          if (p != null)
          {
-            p.Save();
+       
          }
       }
       /// <summary>
@@ -303,8 +316,8 @@ namespace PicFace
       {
          this.Cursor = Cursors.WaitCursor;
          _FaceVisualiser.ReleasePicture();
-         _PictureList.SaveChangedData();
-
+         FormWaitSaving fws = new FormWaitSaving(_PictureList);
+         fws.ShowDialog();
       }
       /// <summary>
       /// Refresh view (reload picasa and xmp data)
@@ -324,6 +337,7 @@ namespace PicFace
       {
          allFilesToolStripMenuItem.Checked = true;
          filesWithChangedFaceInformationToolStripMenuItem.Checked = false;
+         PicFaceConfig.FileView = PicFaceConfig.FileViewSettings.All;
          FillListBoxFiles();
       }
       /// <summary>
@@ -335,6 +349,7 @@ namespace PicFace
       {
          allFilesToolStripMenuItem.Checked = false;
          filesWithChangedFaceInformationToolStripMenuItem.Checked = true;
+         PicFaceConfig.FileView = PicFaceConfig.FileViewSettings.OnlyChanged;
          FillListBoxFiles();
       }
       /// <summary>
@@ -373,6 +388,15 @@ namespace PicFace
 
          DirectoryInfo dirInfo = new DirectoryInfo(_PictureList.Path);
          labelTotalPicsNb.Text = dirInfo.GetFiles("*.jpg").Length.ToString();
+      }
+      /// <summary>
+      /// Show the about form
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void aboutPicFaceToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         new FormAboutPicface().ShowDialog();
       }
 
    }

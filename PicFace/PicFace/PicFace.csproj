@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormAboutPicface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAboutPicface.Designer.cs">
+      <DependentUpon>FormAboutPicface.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExifTool\ExifPictureInfo.cs" />
     <Compile Include="ExifTool\ExifPictureInfoList.cs" />
     <Compile Include="ExifTool\ExifToolPictureData.cs" />
@@ -59,7 +65,21 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormWait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormWait.Designer.cs">
+      <DependentUpon>FormWait.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormWaitLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormWaitSaving.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Framework\RegistryAccess.cs" />
     <Compile Include="Framework\TemporaryFileManager.cs" />
+    <Compile Include="Framework\WindowProperties.cs" />
     <Compile Include="Generic\Face.cs" />
     <Compile Include="Generic\FaceList.cs" />
     <Compile Include="Generic\PictureComparer.cs" />
@@ -73,10 +93,19 @@
     <Compile Include="Picasa\PicasaFaceList.cs" />
     <Compile Include="Picasa\PicasaPictureInfo.cs" />
     <Compile Include="Picasa\PicasaPictureInfoList.cs" />
+    <Compile Include="PicFaceConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormAboutPicface.resx">
+      <DependentUpon>FormAboutPicface.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormWait.resx">
+      <DependentUpon>FormWait.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -105,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Newtonsoft.Json.dll" />
+    <None Include="Resources\picface2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -28,10 +28,11 @@ using System;
 using System.Collections.Generic;
 using PicFace.ExifTool;
 using PicFace.Picasa;
+using System.Diagnostics;
 
 namespace PicFace.Generic
 {
-   #region OnSavedEventArgs
+   #region OnPictureListSavedEventArgs
    /// <summary>
    /// Event args when saved
    /// </summary>
@@ -51,11 +52,44 @@ namespace PicFace.Generic
       }
    }
    #endregion
+   #region OnPictureSavedEventArgs
+   /// <summary>
+   /// Event args when saved
+   /// </summary>
+   internal class OnPictureSavedEventArgs
+   {
+      /// <summary>
+      /// How many percents (from 0 to 100) are done?
+      /// </summary>
+      public int PercentDone { get; private set; }
+      /// <summary>
+      /// Name of the last file saved
+      /// </summary>
+      public string FileName { get; private set; }
+      /// <summary>
+      /// Constructor
+      /// </summary>
+      /// <param name="output"></param>
+      public OnPictureSavedEventArgs(string filename, int percentDone)
+      {
+         FileName = filename;
+         if (percentDone >= 0 && percentDone <= 100)
+         {
+            PercentDone = percentDone;
+         }
+         else
+         {
+            PercentDone = 0;
+         }
+      }
+   }
+   #endregion
    /// <summary>
    /// This class contains all pictures of a directory 
    /// </summary>
    internal class PictureList
    {
+      #region Fields
       private PicasaPictureInfoList _PicasaPictures;
       private ExifPictureInfoList _ExifPictures;
       private Dictionary<string, PictureComparer> _ConsolidatedList;
@@ -63,6 +97,9 @@ namespace PicFace.Generic
       private string _Path;
       private string _SaveResult;
       private int _NumberOfPicturesToSave;
+      private int _TotalNumberOfPictures;
+      private Queue<PictureComparer> _PicturesToSave;
+      #endregion
       /// <summary>
       /// Delegate for event after data was saved
       /// </summary>
@@ -73,6 +110,16 @@ namespace PicFace.Generic
       /// Event after data was saved
       /// </summary>
       public event OnSaved Saved;
+      /// <summary>
+      /// Delegate for event after data for a single picturewas saved
+      /// </summary>
+      /// <param name="sender">Sender object</param>
+      /// <param name="args">Result of saving</param>
+      public delegate void OnPictureSaved(object sender, OnPictureSavedEventArgs args);
+      /// <summary>
+      /// Event after data of a single picture was saved
+      /// </summary>
+      public event OnPictureSaved PictureSaved;
       /// <summary>
       /// Path where the pictures were found
       /// </summary>
@@ -176,11 +223,23 @@ namespace PicFace.Generic
       {
          _SaveResult = "";
          _NumberOfPicturesToSave = 0;
+         _PicturesToSave = new Queue<PictureComparer>();
          foreach (KeyValuePair<string, PictureComparer> kvp in _ChangesPendingList)
          {
             _NumberOfPicturesToSave++;
             kvp.Value.Saved += new PictureComparer.OnSaved(Value_Saved);
-            kvp.Value.Save();
+            _PicturesToSave.Enqueue(kvp.Value);
+         }
+         lock (_PicturesToSave)
+         {
+            _TotalNumberOfPictures = _PicturesToSave.Count;
+            Debug.WriteLine(_TotalNumberOfPictures.ToString() + " Pictures in Save-Queue (Starting)");
+            // start with maximal four threads
+            for (int i = 0; i < 4 && i < _PicturesToSave.Count; i++)
+            {
+               PictureComparer pc = _PicturesToSave.Dequeue();
+               pc.Save();
+            }
 
          }
       }
@@ -191,7 +250,7 @@ namespace PicFace.Generic
       /// <param name="args"></param>
       void Value_Saved(object sender, OnSavedEventArgs args)
       {
-         lock (_SaveResult)
+         lock (_PicturesToSave)
          {
             PictureComparer pc = sender as PictureComparer;
             if (pc != null)
@@ -200,12 +259,28 @@ namespace PicFace.Generic
             }
             _SaveResult += args.ToolOutput;
             _NumberOfPicturesToSave--;
-         }
-         if (_NumberOfPicturesToSave == 0)
-         {
-            if (Saved != null)
+
+            if (PictureSaved != null)
             {
-               Saved(this, new OnPictureListSavedEventArgs(_SaveResult));
+               PictureSaved(this, new OnPictureSavedEventArgs(pc.FileName, (int)(100 - 100 * (float)((float)_NumberOfPicturesToSave / (float)_TotalNumberOfPictures))));
+            }
+
+            // one more in the queue? -> dequeue, start saving
+            if (_PicturesToSave.Count > 0)
+            {
+               PictureComparer pic = _PicturesToSave.Dequeue();
+               pic.Save();
+            }
+
+            Debug.WriteLine(_PicturesToSave.Count.ToString() + " Pictures in Save-Queue");
+
+            // finished?
+            if (_NumberOfPicturesToSave == 0)
+            {
+               if (Saved != null)
+               {
+                  Saved(this, new OnPictureListSavedEventArgs(_SaveResult));
+               }
             }
          }
       }

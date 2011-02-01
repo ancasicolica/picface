@@ -69,7 +69,6 @@ namespace PicFace.Generic
       /// Event after data was saved
       /// </summary>
       public event OnSaved Saved;
-
       /// <summary>
       /// The delta between Picasa and exif
       /// </summary>
