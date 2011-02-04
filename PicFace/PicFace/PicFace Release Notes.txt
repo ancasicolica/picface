@@ -1,0 +1,6 @@
+﻿PicFace Release Notes
+=====================
+
+0.9 Beta (4.2.11)
+First released version with basic functionality. Tested on hundreds of my own pics
+and believed to be pretty stable.

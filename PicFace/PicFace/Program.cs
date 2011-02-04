@@ -39,7 +39,14 @@ namespace PicFace
       {
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);
-         Application.Run(new FormMain());
+         if (PicFaceConfig.ShowStartupDialog)
+         {
+            Application.Run(new FormStartup());
+         }
+         else
+         {
+            Application.Run(new FormMain());
+         }
       }
    }
 }

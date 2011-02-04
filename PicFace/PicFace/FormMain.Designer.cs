@@ -28,17 +28,18 @@
       /// </summary>
       private void InitializeComponent()
       {
+         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
          this.statusStrip1 = new System.Windows.Forms.StatusStrip();
          this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
          this.menuStrip1 = new System.Windows.Forms.MenuStrip();
          this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.selectDirectoryInMyPicturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.selectDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-         this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-         this.aboutPicFaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.allFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.filesWithChangedFaceInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+         this.aboutPicFaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.tabControlContacts = new System.Windows.Forms.TabControl();
          this.tabPage2 = new System.Windows.Forms.TabPage();
          this.buttonChangeDirectory = new System.Windows.Forms.Button();
@@ -134,21 +135,6 @@
          this.selectDirectoryToolStripMenuItem.Text = "Select Directory";
          this.selectDirectoryToolStripMenuItem.Click += new System.EventHandler(this.selectDirectoryToolStripMenuItem_Click);
          // 
-         // toolStripMenuItem1
-         // 
-         this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutPicFaceToolStripMenuItem});
-         this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-         this.toolStripMenuItem1.Size = new System.Drawing.Size(24, 20);
-         this.toolStripMenuItem1.Text = "?";
-         // 
-         // aboutPicFaceToolStripMenuItem
-         // 
-         this.aboutPicFaceToolStripMenuItem.Name = "aboutPicFaceToolStripMenuItem";
-         this.aboutPicFaceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-         this.aboutPicFaceToolStripMenuItem.Text = "About PicFace";
-         this.aboutPicFaceToolStripMenuItem.Click += new System.EventHandler(this.aboutPicFaceToolStripMenuItem_Click);
-         // 
          // viewToolStripMenuItem
          // 
          this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -173,6 +159,21 @@
          this.filesWithChangedFaceInformationToolStripMenuItem.Size = new System.Drawing.Size(261, 22);
          this.filesWithChangedFaceInformationToolStripMenuItem.Text = "files with changed face information";
          this.filesWithChangedFaceInformationToolStripMenuItem.Click += new System.EventHandler(this.filesWithChangedFaceInformationToolStripMenuItem_Click);
+         // 
+         // toolStripMenuItem1
+         // 
+         this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutPicFaceToolStripMenuItem});
+         this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+         this.toolStripMenuItem1.Size = new System.Drawing.Size(24, 20);
+         this.toolStripMenuItem1.Text = "?";
+         // 
+         // aboutPicFaceToolStripMenuItem
+         // 
+         this.aboutPicFaceToolStripMenuItem.Name = "aboutPicFaceToolStripMenuItem";
+         this.aboutPicFaceToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+         this.aboutPicFaceToolStripMenuItem.Text = "About PicFace";
+         this.aboutPicFaceToolStripMenuItem.Click += new System.EventHandler(this.aboutPicFaceToolStripMenuItem_Click);
          // 
          // tabControlContacts
          // 
@@ -522,6 +523,7 @@
          this.Controls.Add(this.statusStrip1);
          this.Controls.Add(this.menuStrip1);
          this.Controls.Add(this.listBoxFilesChanged);
+         this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
          this.MainMenuStrip = this.menuStrip1;
          this.MinimumSize = new System.Drawing.Size(680, 540);
          this.Name = "FormMain";

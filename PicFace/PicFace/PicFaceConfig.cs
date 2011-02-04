@@ -83,5 +83,26 @@ namespace PicFace
             Registry.Write<string>("FileView", value.ToString());
          }
       }
+      /// <summary>
+      /// Show startup dialog? (it is default!)
+      /// </summary>
+      public static bool ShowStartupDialog
+      {
+         get
+         {
+            try
+            {
+               return bool.Parse(Registry.Read<string>("ShowStartupDialog", true.ToString()));
+            }
+            catch
+            {
+               return true;
+            }
+         }
+         set
+         {
+            Registry.Write<string>("ShowStartupDialog", value.ToString());
+         }
+      }
    }
 }
