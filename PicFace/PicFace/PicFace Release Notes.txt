@@ -4,3 +4,10 @@
 0.9 Beta (4.2.11)
 First released version with basic functionality. Tested on hundreds of my own pics
 and believed to be pretty stable.
+
+ToDo
+- Showing name when mouse is over face
+- Showing image tab when selecting file in listbox
+- "Next" and "Prev" Directory button
+- Recursive directory scan
+- Automatic mode (no confirmations, scanning multiple directories)

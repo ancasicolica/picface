@@ -230,6 +230,14 @@ namespace PicFace.Generic
             kvp.Value.Saved += new PictureComparer.OnSaved(Value_Saved);
             _PicturesToSave.Enqueue(kvp.Value);
          }
+         if (_NumberOfPicturesToSave == 0)
+         {  // nothing to save! finish!
+            if (Saved != null)
+            {
+               Saved(this, new OnPictureListSavedEventArgs(_SaveResult));
+            }
+            return;
+         }
          lock (_PicturesToSave)
          {
             _TotalNumberOfPictures = _PicturesToSave.Count;

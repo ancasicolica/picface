@@ -67,6 +67,7 @@ namespace PicFace
          base.FormWait_Load(sender, e);
          progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
          labelAction.Text = "Please wait... Loading faces from pictures";
+         labelInfo.Text = Directory;
          // start a new thread to give the control enough time to display the nice 
          // progress bar
          Thread collector = new Thread(new ThreadStart(CollectionStarter));

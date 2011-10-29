@@ -319,6 +319,7 @@ namespace PicFace.Generic
                   {
                      Debug.WriteLine("Rectangle mismatch", this.FileName);
                      _WriteData.Add(kp.Key, kp.Value);
+                     _DeltaList.Add(kp.Key, kp.Value);
                   }
                }
                else

@@ -398,6 +398,15 @@ namespace PicFace
       {
          new FormAboutPicface().ShowDialog();
       }
+      /// <summary>
+      /// Saves Data recursive
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void buttonSaveRecursive_Click(object sender, EventArgs e)
+      {
+         new FormRecursiveHandling(_CurrentDirectory, _Contacts).Show();
+      }
 
    }
 }

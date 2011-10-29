@@ -71,6 +71,7 @@
          this.textBoxLog = new System.Windows.Forms.TextBox();
          this.listBoxFilesChanged = new System.Windows.Forms.ListBox();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+         this.buttonSaveRecursive = new System.Windows.Forms.Button();
          this.statusStrip1.SuspendLayout();
          this.menuStrip1.SuspendLayout();
          this.tabControlContacts.SuspendLayout();
@@ -192,6 +193,7 @@
          // 
          // tabPage2
          // 
+         this.tabPage2.Controls.Add(this.buttonSaveRecursive);
          this.tabPage2.Controls.Add(this.buttonChangeDirectory);
          this.tabPage2.Controls.Add(this.labelPicturesWithChangedInformationNb);
          this.tabPage2.Controls.Add(this.labelPicsWithFaceInfoNb);
@@ -514,6 +516,16 @@
          this.listBoxFilesChanged.SelectedIndexChanged += new System.EventHandler(this.listBoxFiles_SelectedIndexChanged);
          this.listBoxFilesChanged.DoubleClick += new System.EventHandler(this.listBoxFilesChanged_DoubleClick);
          // 
+         // buttonSaveRecursive
+         // 
+         this.buttonSaveRecursive.Location = new System.Drawing.Point(234, 28);
+         this.buttonSaveRecursive.Name = "buttonSaveRecursive";
+         this.buttonSaveRecursive.Size = new System.Drawing.Size(98, 23);
+         this.buttonSaveRecursive.TabIndex = 17;
+         this.buttonSaveRecursive.Text = "Save Recursive";
+         this.buttonSaveRecursive.UseVisualStyleBackColor = true;
+         this.buttonSaveRecursive.Click += new System.EventHandler(this.buttonSaveRecursive_Click);
+         // 
          // FormMain
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -594,6 +606,7 @@
       private System.Windows.Forms.Label label3;
       private System.Windows.Forms.Label label2;
       private System.Windows.Forms.Button buttonChangeDirectory;
+      private System.Windows.Forms.Button buttonSaveRecursive;
    }
 }
 
