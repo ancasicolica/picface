@@ -49,7 +49,7 @@ namespace PicFace.ExifTool
       /// <param name="etp">source file where data was read out</param>
       public ExifPictureInfo(ExifToolPictureData etp) : base(etp.SourceFile)
       {
-         foreach (Region r in etp.RegionInfo.Regions)
+         foreach (RegionMp r in etp.RegionInfo.Regions)
          {
             try
             {

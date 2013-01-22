@@ -92,7 +92,8 @@ namespace PicFace.Picasa
             }
             try
             {
-               display = @daten.Attributes["display"].InnerText;
+             //  display = @daten.Attributes["display"].InnerText;
+               display = "";
             }
             catch
             {

@@ -66,7 +66,7 @@ namespace PicFace.ExifTool
       public string SourceFile { get; set; }
       public double ExifToolVersion { get; set; }
       public string Directory { get; set; }
-      public RegionInfoContainer RegionInfo { get; set; }
+      public RegionInfoMpContainer RegionInfo { get; set; }
 
       /// <summary>
       /// Collects all ExifToolPictureData (raw data) in a path and returns an array with it
@@ -83,7 +83,9 @@ namespace PicFace.ExifTool
          procStartInfo.RedirectStandardError = true;
          procStartInfo.UseShellExecute = false;
          procStartInfo.Arguments = " \"" + path + "\\*.jpg\" -struct -json ";
-         procStartInfo.Arguments += "-SourceFile -Directory -RegionInfo";
+         procStartInfo.Arguments += "-SourceFile -Directory -RegionInfo -RegionInfoMP";
+         // RegionInfo: this is the information written by tools like Microsoft Photo Gallery
+         // RegionInfoMP: this is the picasa information
 
          procStartInfo.CreateNoWindow = true;
          procStartInfo.StandardOutputEncoding = Encoding.Default;

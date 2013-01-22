@@ -87,7 +87,7 @@ namespace PicFace
 
 #if DEBUG
          //// ###############
-         _CurrentDirectory = @"C:\Users\Christian\Pictures\Tests";
+         _CurrentDirectory = @"D:\Users\Christian.CPC\Pictures\Tests";
          textBoxDirectory.Text = _CurrentDirectory;
 
          LoadPictureIndex();
