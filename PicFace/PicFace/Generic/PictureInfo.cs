@@ -31,7 +31,7 @@ namespace PicFace.Generic
    /// <summary>
    /// Picture Information
    /// </summary>
-   abstract internal class PictureInfo
+   internal class PictureInfo
    {
       /// <summary>
       /// Name of the file
@@ -42,15 +42,20 @@ namespace PicFace.Generic
       /// </summary>
       public string FullFileName { get; set; }
       /// <summary>
-      /// Faces of the Picture
+      /// Faces of the Picture read out from Picasa
       /// </summary>
-      public FaceList Faces { get; set; }
+      public FaceList PicasaFaces { get; set; }
+      /// <summary>
+      /// Faces of the Picture read out from XMP
+      /// </summary>
+      public FaceList XmpFaces { get; set; }
       /// <summary>
       /// Default constructor
       /// </summary>
       public PictureInfo()
       {
-         Faces = new FaceList();
+         XmpFaces = new FaceList();
+         PicasaFaces = new FaceList();
       }
       /// <summary>
       /// Specialised constructor
@@ -60,7 +65,8 @@ namespace PicFace.Generic
       {
          FileName = Path.GetFileName(path);
          FullFileName = path;
-         Faces = new FaceList();
+         XmpFaces = new FaceList();
+         PicasaFaces = new FaceList();
       }
       /// <summary>
       /// File Name

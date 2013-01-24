@@ -70,6 +70,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExifTool\RegionInfoDimensions.cs" />
+    <Compile Include="ExifTool\Area.cs" />
+    <Compile Include="ExifTool\Region.cs" />
+    <Compile Include="ExifTool\RegionInfoContainer.cs" />
     <Compile Include="FormAboutPicface.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,7 +81,6 @@
       <DependentUpon>FormAboutPicface.cs</DependentUpon>
     </Compile>
     <Compile Include="ExifTool\ExifPictureInfo.cs" />
-    <Compile Include="ExifTool\ExifPictureInfoList.cs" />
     <Compile Include="ExifTool\ExifToolPictureData.cs" />
     <Compile Include="ExifTool\ExifToolThread.cs" />
     <Compile Include="ExifTool\RegionMp.cs" />
@@ -122,14 +125,6 @@
     <Compile Include="Generic\PictureInfo.cs" />
     <Compile Include="Generic\PictureInfoList.cs" />
     <Compile Include="Generic\PictureList.cs" />
-    <Compile Include="Picasa\Contact.cs" />
-    <Compile Include="Picasa\ContactReader.cs" />
-    <Compile Include="Picasa\ContactTable.cs" />
-    <Compile Include="Picasa\PicasaDirectoryList.cs" />
-    <Compile Include="Picasa\PicasaFace.cs" />
-    <Compile Include="Picasa\PicasaFaceList.cs" />
-    <Compile Include="Picasa\PicasaPictureInfo.cs" />
-    <Compile Include="Picasa\PicasaPictureInfoList.cs" />
     <Compile Include="PicFaceConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

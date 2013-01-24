@@ -28,7 +28,7 @@
 namespace PicFace.ExifTool
 {
    /// <summary>
-   /// RegionInfo Container, needed by JSON format
+   /// RegionInfo Container for the XMP Tag "RegionInfoMP", needed by JSON format
    /// </summary>
    public class RegionInfoMpContainer
    {

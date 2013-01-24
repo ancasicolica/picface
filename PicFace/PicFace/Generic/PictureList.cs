@@ -27,7 +27,6 @@
 using System;
 using System.Collections.Generic;
 using PicFace.ExifTool;
-using PicFace.Picasa;
 using System.Diagnostics;
 
 namespace PicFace.Generic
@@ -90,8 +89,7 @@ namespace PicFace.Generic
    internal class PictureList
    {
       #region Fields
-      private PicasaPictureInfoList _PicasaPictures;
-      private ExifPictureInfoList _ExifPictures;
+      private PictureInfoList _ExifPictures;
       private Dictionary<string, PictureComparer> _ConsolidatedList;
       private Dictionary<string, PictureComparer> _ChangesPendingList;
       private string _Path;
@@ -131,19 +129,9 @@ namespace PicFace.Generic
          }
       }
       /// <summary>
-      /// Picasa Pictures
-      /// </summary>
-      public PicasaPictureInfoList PicasaPictures 
-      { 
-         get
-         {
-            return _PicasaPictures;
-         }
-      }
-      /// <summary>
       /// Exif Pictures
       /// </summary>
-      public ExifPictureInfoList ExifPictures
+      public PictureInfoList ExifPictures
       {
          get
          {
@@ -174,23 +162,15 @@ namespace PicFace.Generic
       /// Constructor
       /// </summary>
       /// <param name="path">Path where the pictures are</param>
-      public PictureList(string path, ContactTable contacts)
+      public PictureList(string path)
       {
          
          _Path = path;
-         _PicasaPictures = new PicasaPictureInfoList(path, contacts);
-         _ExifPictures = new ExifPictureInfoList(path);
+
+         _ExifPictures = new PictureInfoList(path);
          _ConsolidatedList = new Dictionary<string, PictureComparer>();
          _ChangesPendingList = new Dictionary<string, PictureComparer>();
 
-         // add first all picasa pictures
-         foreach (KeyValuePair<string, PictureInfo> entry in _PicasaPictures)
-         {
-            PictureComparer pc = new PictureComparer();
-            pc.PicasaInfo = entry.Value as PicasaPictureInfo;
-            pc.CheckPics();
-            _ConsolidatedList.Add(entry.Key, pc);
-         }
          // now add all pictures having exiftool information
          foreach (KeyValuePair<string, PictureInfo> entry in _ExifPictures)
          {

@@ -49,7 +49,7 @@ namespace PicFace.ExifTool
       /// <param name="etp">source file where data was read out</param>
       public ExifPictureInfo(ExifToolPictureData etp) : base(etp.SourceFile)
       {
-         foreach (RegionMp r in etp.RegionInfo.Regions)
+         foreach (RegionMp r in etp.RegionInfoMp.Regions)
          {
             try
             {
@@ -64,9 +64,9 @@ namespace PicFace.ExifTool
                   Face f = new Face(r.PersonConvertedName, new RectangleF(x, y, w, h));
                   if (f.Name != null && !f.Name.Equals("ffffffffffffffff") && f.Name.Length > 1)
                   {
-                     if (!Faces.ContainsKey(f.Name))
+                     if (!XmpFaces.ContainsKey(f.Name))
                      {
-                        Faces.Add(f.Name, f);
+                        XmpFaces.Add(f.Name, f);
                      }
                   }
                }

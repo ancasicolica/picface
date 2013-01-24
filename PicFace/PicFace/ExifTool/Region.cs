@@ -1,7 +1,7 @@
 ﻿/************************************************************************************/
 /*
       PicFace - Writes Picasa face information to XMP 
-      Copyright (C) 2011 Christian Kuster, CH-8342 Wernetshausen, www.kusti.ch
+      Copyright (C) 2013 Christian Kuster, CH-8342 Wernetshausen, www.kusti.ch
 
       LICENSE TERMS
 
@@ -24,54 +24,72 @@
        and/or fitness for purpose. 
 */
 /************************************************************************************/
-using PicFace.Generic;
+using System;
+using System.Text;
 
-namespace PicFace.Picasa
+namespace PicFace.ExifTool
 {
    /// <summary>
-   /// This is the class for one picture (file) with all its information read out
-   /// from .picasa.ini
+   /// Region for a person information (Picasa). Naming after Exif Tool terms (JSON Format)
    /// </summary>
-   internal class PicasaPictureInfo : PictureInfo
+   public class Region
    {
-      #region Fields
       /// <summary>
-      /// Faces we do not know
+      /// Display name, as read in JSON
       /// </summary>
-      private int _UnknownFaces;
-      #endregion
+      public string Name { get; set; }
       /// <summary>
-      /// How many faces are there we do not know?
+      /// Display name, converted
       /// </summary>
-      public int UnkownFaces
+      public string PersonConvertedName
       {
          get
          {
-            return _UnknownFaces;
+            return ConvertDefaultToUtf8(Name);
          }
       }
       /// <summary>
-      /// Default constructor
+      /// Rectangle read from JSON
       /// </summary>
-      public PicasaPictureInfo() : base()
-      {
-         _UnknownFaces = 0;
-      }
+      public PicFace.ExifTool.AreaData Area { get; set; }
+      public string Type { get; set; }
       /// <summary>
-      /// Specialised constructor
+      /// Region
       /// </summary>
-      /// <param name="path">Full path and name</param>
-      public PicasaPictureInfo(string path) : base(path)
+      public Region()
       {
-         _UnknownFaces = 0;
-      }
 
+      }
       /// <summary>
-      /// We found a face not known
+      /// Converts a string in default coding to utf8
       /// </summary>
-      public void UnkownFaceFound()
+      /// <param name="sourceString"></param>
+      /// <returns></returns>
+      private string ConvertDefaultToUtf8(string sourceString)
       {
-         _UnknownFaces++;
+         if (sourceString == null)
+         {
+            return "";
+         }
+
+         // Create two different encodings.
+         Encoding source = Encoding.Default;
+
+         // Convert the string into a byte[].
+         byte[] unicodeBytes = source.GetBytes(sourceString);
+
+         Console.WriteLine("1: {0}", Encoding.UTF8.GetString(unicodeBytes));
+
+
+         return Encoding.UTF8.GetString(unicodeBytes);
+      }
+      /// <summary>
+      /// Debuggable name
+      /// </summary>
+      /// <returns></returns>
+      public override string ToString()
+      {
+         return PersonConvertedName;
       }
    }
 }

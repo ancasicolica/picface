@@ -42,6 +42,7 @@
          this.aboutPicFaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.tabControlContacts = new System.Windows.Forms.TabControl();
          this.tabPage2 = new System.Windows.Forms.TabPage();
+         this.buttonSaveRecursive = new System.Windows.Forms.Button();
          this.buttonChangeDirectory = new System.Windows.Forms.Button();
          this.labelPicturesWithChangedInformationNb = new System.Windows.Forms.Label();
          this.labelPicsWithFaceInfoNb = new System.Windows.Forms.Label();
@@ -61,17 +62,10 @@
          this.groupBoxPicasa = new System.Windows.Forms.GroupBox();
          this.listBoxPersonsFound = new System.Windows.Forms.ListBox();
          this.pictureBoxPreview = new System.Windows.Forms.PictureBox();
-         this.tabPageContacts = new System.Windows.Forms.TabPage();
-         this.labelContactNb = new System.Windows.Forms.Label();
-         this.labelContactInfo = new System.Windows.Forms.Label();
-         this.listBoxContacts = new System.Windows.Forms.ListBox();
-         this.buttonRefreshContacts = new System.Windows.Forms.Button();
-         this.labelContactsFile = new System.Windows.Forms.Label();
          this.tabPageLog = new System.Windows.Forms.TabPage();
          this.textBoxLog = new System.Windows.Forms.TextBox();
          this.listBoxFilesChanged = new System.Windows.Forms.ListBox();
          this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-         this.buttonSaveRecursive = new System.Windows.Forms.Button();
          this.statusStrip1.SuspendLayout();
          this.menuStrip1.SuspendLayout();
          this.tabControlContacts.SuspendLayout();
@@ -81,7 +75,6 @@
          this.groupBox1.SuspendLayout();
          this.groupBoxPicasa.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
-         this.tabPageContacts.SuspendLayout();
          this.tabPageLog.SuspendLayout();
          this.SuspendLayout();
          // 
@@ -178,12 +171,11 @@
          // 
          // tabControlContacts
          // 
-         this.tabControlContacts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.tabControlContacts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.tabControlContacts.Controls.Add(this.tabPage2);
          this.tabControlContacts.Controls.Add(this.tabPage1);
-         this.tabControlContacts.Controls.Add(this.tabPageContacts);
          this.tabControlContacts.Controls.Add(this.tabPageLog);
          this.tabControlContacts.Location = new System.Drawing.Point(168, 24);
          this.tabControlContacts.Name = "tabControlContacts";
@@ -211,6 +203,16 @@
          this.tabPage2.TabIndex = 2;
          this.tabPage2.Text = "Info";
          this.tabPage2.UseVisualStyleBackColor = true;
+         // 
+         // buttonSaveRecursive
+         // 
+         this.buttonSaveRecursive.Location = new System.Drawing.Point(234, 28);
+         this.buttonSaveRecursive.Name = "buttonSaveRecursive";
+         this.buttonSaveRecursive.Size = new System.Drawing.Size(98, 23);
+         this.buttonSaveRecursive.TabIndex = 17;
+         this.buttonSaveRecursive.Text = "Save Recursive";
+         this.buttonSaveRecursive.UseVisualStyleBackColor = true;
+         this.buttonSaveRecursive.Click += new System.EventHandler(this.buttonSaveRecursive_Click);
          // 
          // buttonChangeDirectory
          // 
@@ -299,8 +301,8 @@
          // 
          // textBoxDirectory
          // 
-         this.textBoxDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.textBoxDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.textBoxDirectory.Location = new System.Drawing.Point(62, 3);
          this.textBoxDirectory.Name = "textBoxDirectory";
          this.textBoxDirectory.ReadOnly = true;
@@ -348,7 +350,7 @@
          this.listBoxResult.Location = new System.Drawing.Point(3, 16);
          this.listBoxResult.MultiColumn = true;
          this.listBoxResult.Name = "listBoxResult";
-         this.listBoxResult.Size = new System.Drawing.Size(120, 69);
+         this.listBoxResult.Size = new System.Drawing.Size(120, 81);
          this.listBoxResult.Sorted = true;
          this.listBoxResult.TabIndex = 4;
          // 
@@ -370,15 +372,15 @@
          this.listBoxPersonsFoundXmp.Location = new System.Drawing.Point(3, 16);
          this.listBoxPersonsFoundXmp.MultiColumn = true;
          this.listBoxPersonsFoundXmp.Name = "listBoxPersonsFoundXmp";
-         this.listBoxPersonsFoundXmp.Size = new System.Drawing.Size(160, 69);
+         this.listBoxPersonsFoundXmp.Size = new System.Drawing.Size(160, 81);
          this.listBoxPersonsFoundXmp.Sorted = true;
          this.listBoxPersonsFoundXmp.TabIndex = 4;
          this.listBoxPersonsFoundXmp.SelectedIndexChanged += new System.EventHandler(this.listBoxPersonsFound_SelectedIndexChanged);
          // 
          // groupBoxPicasa
          // 
-         this.groupBoxPicasa.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.groupBoxPicasa.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.groupBoxPicasa.Controls.Add(this.listBoxPersonsFound);
          this.groupBoxPicasa.Location = new System.Drawing.Point(10, 339);
          this.groupBoxPicasa.Name = "groupBoxPicasa";
@@ -394,16 +396,16 @@
          this.listBoxPersonsFound.Location = new System.Drawing.Point(3, 16);
          this.listBoxPersonsFound.MultiColumn = true;
          this.listBoxPersonsFound.Name = "listBoxPersonsFound";
-         this.listBoxPersonsFound.Size = new System.Drawing.Size(163, 69);
+         this.listBoxPersonsFound.Size = new System.Drawing.Size(163, 81);
          this.listBoxPersonsFound.Sorted = true;
          this.listBoxPersonsFound.TabIndex = 4;
          this.listBoxPersonsFound.SelectedIndexChanged += new System.EventHandler(this.listBoxPersonsFound_SelectedIndexChanged);
          // 
          // pictureBoxPreview
          // 
-         this.pictureBoxPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.pictureBoxPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.pictureBoxPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.pictureBoxPreview.Location = new System.Drawing.Point(10, 6);
          this.pictureBoxPreview.Name = "pictureBoxPreview";
@@ -412,76 +414,6 @@
          this.pictureBoxPreview.TabIndex = 3;
          this.pictureBoxPreview.TabStop = false;
          this.pictureBoxPreview.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPreview_MouseMove);
-         // 
-         // tabPageContacts
-         // 
-         this.tabPageContacts.Controls.Add(this.labelContactNb);
-         this.tabPageContacts.Controls.Add(this.labelContactInfo);
-         this.tabPageContacts.Controls.Add(this.listBoxContacts);
-         this.tabPageContacts.Controls.Add(this.buttonRefreshContacts);
-         this.tabPageContacts.Controls.Add(this.labelContactsFile);
-         this.tabPageContacts.Location = new System.Drawing.Point(4, 22);
-         this.tabPageContacts.Name = "tabPageContacts";
-         this.tabPageContacts.Padding = new System.Windows.Forms.Padding(3);
-         this.tabPageContacts.Size = new System.Drawing.Size(494, 430);
-         this.tabPageContacts.TabIndex = 1;
-         this.tabPageContacts.Text = "Contacts";
-         this.tabPageContacts.UseVisualStyleBackColor = true;
-         // 
-         // labelContactNb
-         // 
-         this.labelContactNb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-         this.labelContactNb.Location = new System.Drawing.Point(377, 407);
-         this.labelContactNb.Name = "labelContactNb";
-         this.labelContactNb.Size = new System.Drawing.Size(100, 23);
-         this.labelContactNb.TabIndex = 4;
-         this.labelContactNb.Text = "0 Contacts";
-         this.labelContactNb.TextAlign = System.Drawing.ContentAlignment.TopRight;
-         // 
-         // labelContactInfo
-         // 
-         this.labelContactInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
-         this.labelContactInfo.AutoSize = true;
-         this.labelContactInfo.Location = new System.Drawing.Point(8, 407);
-         this.labelContactInfo.Name = "labelContactInfo";
-         this.labelContactInfo.Size = new System.Drawing.Size(10, 13);
-         this.labelContactInfo.TabIndex = 3;
-         this.labelContactInfo.Text = "-";
-         // 
-         // listBoxContacts
-         // 
-         this.listBoxContacts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
-         this.listBoxContacts.FormattingEnabled = true;
-         this.listBoxContacts.Location = new System.Drawing.Point(8, 36);
-         this.listBoxContacts.MultiColumn = true;
-         this.listBoxContacts.Name = "listBoxContacts";
-         this.listBoxContacts.Size = new System.Drawing.Size(469, 368);
-         this.listBoxContacts.Sorted = true;
-         this.listBoxContacts.TabIndex = 2;
-         this.listBoxContacts.SelectedIndexChanged += new System.EventHandler(this.listBoxContacts_SelectedIndexChanged);
-         // 
-         // buttonRefreshContacts
-         // 
-         this.buttonRefreshContacts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-         this.buttonRefreshContacts.Location = new System.Drawing.Point(405, 7);
-         this.buttonRefreshContacts.Name = "buttonRefreshContacts";
-         this.buttonRefreshContacts.Size = new System.Drawing.Size(75, 23);
-         this.buttonRefreshContacts.TabIndex = 1;
-         this.buttonRefreshContacts.Text = "refresh";
-         this.buttonRefreshContacts.UseVisualStyleBackColor = true;
-         this.buttonRefreshContacts.Click += new System.EventHandler(this.buttonRefreshContacts_Click);
-         // 
-         // labelContactsFile
-         // 
-         this.labelContactsFile.AutoSize = true;
-         this.labelContactsFile.Location = new System.Drawing.Point(8, 12);
-         this.labelContactsFile.Name = "labelContactsFile";
-         this.labelContactsFile.Size = new System.Drawing.Size(35, 13);
-         this.labelContactsFile.TabIndex = 0;
-         this.labelContactsFile.Text = "label1";
          // 
          // tabPageLog
          // 
@@ -505,8 +437,8 @@
          // 
          // listBoxFilesChanged
          // 
-         this.listBoxFilesChanged.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)));
+         this.listBoxFilesChanged.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
          this.listBoxFilesChanged.FormattingEnabled = true;
          this.listBoxFilesChanged.Location = new System.Drawing.Point(0, 27);
          this.listBoxFilesChanged.Name = "listBoxFilesChanged";
@@ -515,16 +447,6 @@
          this.listBoxFilesChanged.TabIndex = 2;
          this.listBoxFilesChanged.SelectedIndexChanged += new System.EventHandler(this.listBoxFiles_SelectedIndexChanged);
          this.listBoxFilesChanged.DoubleClick += new System.EventHandler(this.listBoxFilesChanged_DoubleClick);
-         // 
-         // buttonSaveRecursive
-         // 
-         this.buttonSaveRecursive.Location = new System.Drawing.Point(234, 28);
-         this.buttonSaveRecursive.Name = "buttonSaveRecursive";
-         this.buttonSaveRecursive.Size = new System.Drawing.Size(98, 23);
-         this.buttonSaveRecursive.TabIndex = 17;
-         this.buttonSaveRecursive.Text = "Save Recursive";
-         this.buttonSaveRecursive.UseVisualStyleBackColor = true;
-         this.buttonSaveRecursive.Click += new System.EventHandler(this.buttonSaveRecursive_Click);
          // 
          // FormMain
          // 
@@ -553,8 +475,6 @@
          this.groupBox1.ResumeLayout(false);
          this.groupBoxPicasa.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
-         this.tabPageContacts.ResumeLayout(false);
-         this.tabPageContacts.PerformLayout();
          this.tabPageLog.ResumeLayout(false);
          this.tabPageLog.PerformLayout();
          this.ResumeLayout(false);
@@ -570,12 +490,6 @@
       private System.Windows.Forms.ToolStripMenuItem aboutPicFaceToolStripMenuItem;
       private System.Windows.Forms.TabControl tabControlContacts;
       private System.Windows.Forms.TabPage tabPage1;
-      private System.Windows.Forms.TabPage tabPageContacts;
-      private System.Windows.Forms.Button buttonRefreshContacts;
-      private System.Windows.Forms.Label labelContactsFile;
-      private System.Windows.Forms.Label labelContactInfo;
-      private System.Windows.Forms.ListBox listBoxContacts;
-      private System.Windows.Forms.Label labelContactNb;
       private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem selectDirectoryInMyPicturesToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem selectDirectoryToolStripMenuItem;

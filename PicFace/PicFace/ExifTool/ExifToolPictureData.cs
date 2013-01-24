@@ -55,6 +55,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using PicFace.Generic;
 
 namespace PicFace.ExifTool
 {
@@ -66,13 +67,14 @@ namespace PicFace.ExifTool
       public string SourceFile { get; set; }
       public double ExifToolVersion { get; set; }
       public string Directory { get; set; }
-      public RegionInfoMpContainer RegionInfo { get; set; }
+      public RegionInfoMpContainer RegionInfoMp { get; set; }
+      public RegionInfoContainer RegionInfo { get; set; }
 
       /// <summary>
       /// Collects all ExifToolPictureData (raw data) in a path and returns an array with it
       /// </summary>
       /// <param name="path">Path where to collect</param>
-      public static void Collect(string path, ExifPictureInfoList list)
+      public static void Collect(string path, PictureInfoList list)
       {
 
          // Read General properties using UTF8
@@ -83,7 +85,7 @@ namespace PicFace.ExifTool
          procStartInfo.RedirectStandardError = true;
          procStartInfo.UseShellExecute = false;
          procStartInfo.Arguments = " \"" + path + "\\*.jpg\" -struct -json ";
-         procStartInfo.Arguments += "-SourceFile -Directory -RegionInfo -RegionInfoMP";
+         procStartInfo.Arguments += "-SourceFile -Directory -RegionInfo -ExifToolVersion -RegionInfoMP";
          // RegionInfo: this is the information written by tools like Microsoft Photo Gallery
          // RegionInfoMP: this is the picasa information
 
@@ -97,22 +99,38 @@ namespace PicFace.ExifTool
          {
             string line = streamReader.ReadToEnd();
             jsonData += line;
-            // Debug.WriteLine(line);
+            Debug.WriteLine(line);
             Thread.Sleep(20);
          }
          streamReader.Close();
 
+         // Deserialise the JSON Data into an array
          ExifToolPictureData[] imageData = JsonConvert.DeserializeObject<ExifToolPictureData[]>(jsonData);
          if (imageData != null)
          {
+            // iterate through EACH PICTURE
             foreach (ExifToolPictureData etp in imageData)
             {
                if (etp.RegionInfo != null)
                {
-                  ExifPictureInfo info = new ExifPictureInfo(etp);
-                  if (info.Faces != null && info.Faces.Count > 0)
-                  {  // add only pictures with faces in it!
-                     list.Add(info.FileName.ToUpper(), info);
+                  PictureInfo info = new PictureInfo(etp.SourceFile);
+
+                  // Convert all XMP faces to the internal format and add them to the XMP list
+                  if (etp.RegionInfoMp.Regions != null)
+                  {
+                     foreach (RegionMp region in etp.RegionInfoMp.Regions)
+                     {
+                        info.XmpFaces.Add(region.PersonConvertedName, new Face(region));
+                     }
+                  }
+
+                  // Convert all Picasa faces 
+                  if (etp.RegionInfo.Regions != null)
+                  {
+                     foreach (Region region in etp.RegionInfo.Regions)
+                     {
+                        info.PicasaFaces.Add(region.PersonConvertedName, new Face(region, etp.RegionInfo.AppliedToDimensions));
+                     }
                   }
                }
             }

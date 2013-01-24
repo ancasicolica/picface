@@ -1,7 +1,7 @@
 ﻿/************************************************************************************/
 /*
       PicFace - Writes Picasa face information to XMP 
-      Copyright (C) 2011 Christian Kuster, CH-8342 Wernetshausen, www.kusti.ch
+      Copyright (C) 2013 Christian Kuster, CH-8342 Wernetshausen, www.kusti.ch
 
       LICENSE TERMS
 
@@ -24,29 +24,31 @@
        and/or fitness for purpose. 
 */
 /************************************************************************************/
-using System.Collections.Generic;
-
-namespace PicFace.Picasa
+namespace PicFace.ExifTool
 {
    /// <summary>
-   /// The contact table is a dictionary, nothing else...
+   /// This are the dimensions of the image used for the Picasa tag "RegionInfo / AppliedToDimensions"
    /// </summary>
-   internal class ContactTable : Dictionary<string, Contact>
+   public class RegionInfoDimensions
    {
+      /// <summary>
+      /// Height of the image
+      /// </summary>
+      public int H { get; set; }
+      /// <summary>
+      /// Unit - what else than pixel will we have to expect??
+      /// </summary>
+      public string Unit { get; set; }
+      /// <summary>
+      /// Width of the image
+      /// </summary>
+      public int W { get; set; }
       /// <summary>
       /// Constructor
       /// </summary>
-      public ContactTable()
+      public RegionInfoDimensions()
       {
 
-      }
-      /// <summary>
-      /// Add a Contact
-      /// </summary>
-      /// <param name="contact">contact</param>
-      public void Add(Contact contact)
-      {
-         base.Add(contact.Id, contact);
       }
    }
 }

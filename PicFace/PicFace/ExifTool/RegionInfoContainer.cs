@@ -1,7 +1,7 @@
 ﻿/************************************************************************************/
 /*
       PicFace - Writes Picasa face information to XMP 
-      Copyright (C) 2011 Christian Kuster, CH-8342 Wernetshausen, www.kusti.ch
+      Copyright (C) 2013 Christian Kuster, CH-8342 Wernetshausen, www.kusti.ch
 
       LICENSE TERMS
 
@@ -24,56 +24,25 @@
        and/or fitness for purpose. 
 */
 /************************************************************************************/
-using System.Drawing;
-using PicFace.Generic;
 
-namespace PicFace.Picasa
+namespace PicFace.ExifTool
 {
    /// <summary>
-   /// This is one face found on a picture
+   /// RegionInfo Container, needed by JSON format
    /// </summary>
-   internal class PicasaFace : Face
+   public class RegionInfoContainer
    {
-      private Contact _Person;
+      public RegionInfoDimensions AppliedToDimensions { get; set; }
       /// <summary>
-      /// Person found, must never be null
-      /// </summary>
-      public Contact Person
-      {
-         get
-         {
-            return _Person;
-         }
-         set
-         {
-            _Person = value;
-            base.Name = _Person.Name;
-         }
-      }
+      /// Regions, array as provided by JSON converter
+      /// </summary>     
+      public Region[] Regions { get; set; }
+
       /// <summary>
-      /// Default Constructor
+      /// Constructor
       /// </summary>
-      public PicasaFace():base("", new RectangleF())
+      public RegionInfoContainer()
       {
-         Person = new Contact("", "no name", "", null);
-      }
-      /// <summary>
-      /// Specialised Constructor
-      /// </summary>
-      /// <param name="person">Contact</param>
-      /// <param name="rect">Rectangle</param>
-      public PicasaFace(Contact person, RectangleF rect) : base(person.Name, rect)
-      {
-         Rect = rect;
-         Person = person;
-      }
-      /// <summary>
-      /// ToString Override for a face - use Person
-      /// </summary>
-      /// <returns></returns>
-      public override string ToString()
-      {
-         return Person.Name;
       }
    }
 }

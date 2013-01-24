@@ -1,4 +1,5 @@
-﻿/************************************************************************************/
+﻿using PicFace.ExifTool;
+/************************************************************************************/
 /*
       PicFace - Writes Picasa face information to XMP 
       Copyright (C) 2011 Christian Kuster, CH-8342 Wernetshausen, www.kusti.ch
@@ -50,6 +51,22 @@ namespace PicFace.Generic
          Name = "";
          Rect = new RectangleF();
       }
+      /// <summary>
+      /// Specialised constructor for a face read out with exiftool and written by Picasa
+      /// </summary>
+      /// <param name="region">Face information, including area and name</param>
+      /// <param name="dimensions">Dimensions of the complete image</param>
+      public Face(ExifTool.Region region, RegionInfoDimensions dimensions)
+      {
+      }
+      /// <summary>
+      /// Specialised constructor for a face read out with exiftool and written in XMP (eg with Microsoft tools)
+      /// </summary>
+      /// <param name="region">Face information, including area and name</param>
+      public Face(RegionMp region)
+      {
+      }
+
       /// <summary>
       /// Specialised Constructor
       /// </summary>

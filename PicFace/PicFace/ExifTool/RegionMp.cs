@@ -19,7 +19,7 @@
 
        DISCLAIMER
 
-       This software is provided 'as is' with no explicit or implied warranties
+       This software is provided 'as is' with no explicit or implied warranties7
        in respect of its properties, including, but not limited to, correctness
        and/or fitness for purpose. 
 */
@@ -30,7 +30,7 @@ using System.Text;
 namespace PicFace.ExifTool
 {
    /// <summary>
-   /// Region for a person information. Naming after Exif Tool terms (JSON Format)
+   /// Region for a person information (XMP). Naming after Exif Tool terms (JSON Format)
    /// </summary>
    public class RegionMp
    {
@@ -81,6 +81,14 @@ namespace PicFace.ExifTool
 
 
          return Encoding.UTF8.GetString(unicodeBytes);
+      }
+      /// <summary>
+      /// Debuggable name
+      /// </summary>
+      /// <returns></returns>
+      public override string ToString()
+      {
+         return PersonConvertedName;
       }
    }
 }

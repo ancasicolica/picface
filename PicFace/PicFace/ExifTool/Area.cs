@@ -1,7 +1,7 @@
 ﻿/************************************************************************************/
 /*
       PicFace - Writes Picasa face information to XMP 
-      Copyright (C) 2011 Christian Kuster, CH-8342 Wernetshausen, www.kusti.ch
+      Copyright (C) 2013 Christian Kuster, CH-8342 Wernetshausen, www.kusti.ch
 
       LICENSE TERMS
 
@@ -24,47 +24,43 @@
        and/or fitness for purpose. 
 */
 /************************************************************************************/
-using System;
-using System.Text;
-using PicFace.Generic;
 
 namespace PicFace.ExifTool
 {
    /// <summary>
-   /// List containing all images read out with exiftool
+   /// This is an AREA written in the Picasa Tag "RegionInfo / RegionList"
+   /// 
+   /// The rectangle is defined in a rather special way: X and Y define the center
+   /// of the rectangle, W and H width and heigth
    /// </summary>
-   internal class ExifPictureInfoList : PictureInfoList
+   public class AreaData
    {
+      /// <summary>
+      /// The HEIGHT of the rectangle
+      /// </summary>
+      public double H { get; set; }
+      /// <summary>
+      /// The UNIT, we expect so far only the value "NORMALIZED"
+      /// </summary>
+      public string Unit { get; set; }
+      /// <summary>
+      /// The WIDTH of the rectangle
+      /// </summary>
+      public double W { get; set; }
+      /// <summary>
+      /// The X center point of the rectangle
+      /// </summary>
+      public double X { get; set; }
+      /// <summary>
+      /// The Y center point of the rectangle
+      /// </summary>
+      public double Y { get; set; }
       /// <summary>
       /// Constructor
       /// </summary>
-      /// <param name="path">Path where the data is collected</param>
-      public ExifPictureInfoList(string path) : base(path)
+      public AreaData()
       {
-         ExifToolPictureData.Collect(path, this);
-      }
-      /// <summary>
-      /// Converts a string in default coding to utf8
-      /// </summary>
-      /// <param name="sourceString"></param>
-      /// <returns></returns>
-      private string ConvertDefaultToUtf8(string sourceString)
-      {
-         if (sourceString == null)
-         {
-            return "";
-         }
 
-         // Create two different encodings.
-         Encoding source = Encoding.Default;
-
-         // Convert the string into a byte[].
-         byte[] unicodeBytes = source.GetBytes(sourceString);
-
-         Console.WriteLine("1: {0}", Encoding.UTF8.GetString(unicodeBytes));
-
-
-         return Encoding.UTF8.GetString(unicodeBytes);
       }
    }
 }

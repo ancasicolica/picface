@@ -30,8 +30,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using PicFace.Generic;
-using PicFace.Picasa;
 using PicFace.Framework;
+using PicFace.ExifTool;
 
 namespace PicFace
 {
@@ -41,10 +41,6 @@ namespace PicFace
    public partial class FormMain : Form
    {
       #region Fields
-      /// <summary>
-      /// All contacts
-      /// </summary>
-      private ContactTable _Contacts;
       /// <summary>
       /// Name of the current directory
       /// </summary>
@@ -90,6 +86,8 @@ namespace PicFace
          _CurrentDirectory = @"D:\Users\Christian.CPC\Pictures\Tests";
          textBoxDirectory.Text = _CurrentDirectory;
 
+         ExifToolPictureData.Collect(_CurrentDirectory, new PictureInfoList(_CurrentDirectory));
+
          LoadPictureIndex();
          //// ###############
 #endif
@@ -101,16 +99,7 @@ namespace PicFace
       /// <param name="e"></param>
       private void buttonRefreshContacts_Click(object sender, EventArgs e)
       {
-         labelContactsFile.Text = ContactReader.PicasaDefaultPersonFile;
 
-         _Contacts = ContactReader.Read(ContactReader.PicasaDefaultPersonFile);
-         listBoxContacts.Items.Clear();
-
-         foreach (KeyValuePair<string, Contact> c in _Contacts)
-         {
-            listBoxContacts.Items.Add(c.Value);
-         }
-         labelContactNb.Text = listBoxContacts.Items.Count.ToString() + " Contacts";
       }
       /// <summary>
       /// Show info about the contact when selecting a new one
@@ -119,21 +108,7 @@ namespace PicFace
       /// <param name="e"></param>
       private void listBoxContacts_SelectedIndexChanged(object sender, EventArgs e)
       {
-         Contact c = listBoxContacts.SelectedItem as Contact;
-         if (c != null)
-         {
-            labelContactInfo.Text = c.Name;
-            if (c.Display.Length > 0)
-            {
-               labelContactInfo.Text += " (\"" + c.Display + "\")";
-            }
-            labelContactInfo.Text += " " + c.Modified.ToShortDateString() + " " + c.Modified.ToShortTimeString();
-            labelContactInfo.Text += " id:" + c.Id;
-         }
-         else
-         {
-            labelContactInfo.Text = "";
-         }
+
       }
       /// <summary>
       /// Select Directory in "My Pictures"
@@ -200,7 +175,7 @@ namespace PicFace
       {
          // toolStripStatusLabelInfo.Text = "Loading pictures";
          // show the "please wait dialog" and get the results from it
-         FormWaitLoading fwl = new FormWaitLoading(_CurrentDirectory, _Contacts);
+         FormWaitLoading fwl = new FormWaitLoading(_CurrentDirectory);
          fwl.ShowDialog();
          _PictureList = fwl.Pictures;
          _PictureList.Saved += new PictureList.OnSaved(_PictureList_Saved);
@@ -245,19 +220,12 @@ namespace PicFace
             listBoxPersonsFoundXmp.Items.Clear();
             listBoxResult.Items.Clear();
 
-            if (p.PicasaInfo != null)
-            {
-               foreach (KeyValuePair<string, Face> kp in p.PicasaInfo.Faces)
-               {
-                  listBoxPersonsFound.Items.Add(kp.Value);
-               }
-            }
             if (p.ExifInfo != null)
             {
-               foreach (KeyValuePair<string, Face> kp in p.ExifInfo.Faces)
+             /*  foreach (KeyValuePair<string, Face> kp in p.ExifInfo.Faces)
                {
                   listBoxPersonsFoundXmp.Items.Add(kp.Value);
-               }
+               }*/
             }
             if (p.WriteData != null)
             {
@@ -405,7 +373,7 @@ namespace PicFace
       /// <param name="e"></param>
       private void buttonSaveRecursive_Click(object sender, EventArgs e)
       {
-         new FormRecursiveHandling(_CurrentDirectory, _Contacts).Show();
+         new FormRecursiveHandling(_CurrentDirectory).Show();
       }
 
    }

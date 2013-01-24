@@ -29,7 +29,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using PicFace.ExifTool;
-using PicFace.Picasa;
 using System.Threading;
 
 namespace PicFace.Generic
@@ -81,10 +80,6 @@ namespace PicFace.Generic
       /// </summary>
       private FaceList _WriteData;
       /// <summary>
-      /// The Picasa Part of the Information
-      /// </summary>
-      public PicasaPictureInfo PicasaInfo {get; set;}
-      /// <summary>
       /// The Exif Part of the Information
       /// </summary>
       public ExifPictureInfo ExifInfo {get; set;}
@@ -105,10 +100,6 @@ namespace PicFace.Generic
       {
          get
          {
-            if (PicasaInfoMissing)
-            {  // nothing
-               return "";
-            }
             string s = "";
             foreach (KeyValuePair<string, Face> kvp in _WriteData)
             {
@@ -135,10 +126,7 @@ namespace PicFace.Generic
             {
                return ExifInfo.FileName;
             }
-            if (!PicasaInfoMissing)
-            {
-               return PicasaInfo.FileName;
-            }
+
             return "none.jpg"; // should not happen!
          }
       }
@@ -153,10 +141,7 @@ namespace PicFace.Generic
             {
                return ExifInfo.FullFileName;
             }
-            if (!PicasaInfoMissing)
-            {
-               return PicasaInfo.FullFileName;
-            }
+
             return "none.jpg"; // should not happen!
          }
       }
@@ -187,10 +172,7 @@ namespace PicFace.Generic
       {
          get
          {
-            if (ExifInfoMissing && !PicasaInfoMissing)
-            {
-               return (PicasaInfo.Faces.Count > 0);
-            }
+
             return _DeltaList.Count > 0;
          }
       }
@@ -212,16 +194,6 @@ namespace PicFace.Generic
          get
          {
             return _OnlyInExif;
-         }
-      }
-      /// <summary>
-      /// Is Picasa Info missing?
-      /// </summary>
-      public bool PicasaInfoMissing
-      {
-         get
-         {
-            return PicasaInfo == null;
          }
       }
       /// <summary>
@@ -267,7 +239,7 @@ namespace PicFace.Generic
          _OnlyInExif = new FaceList();
          _RegionMismatch = new FaceList();
          _WriteData = new FaceList();
-
+#if oldcode
          // 1) if there are faces in Picasa and none in exif: copy all
          // 2) if there are none in Picasa and some in exif: do nothing
          // 3) compare, list difference
@@ -380,6 +352,7 @@ namespace PicFace.Generic
                }
             }
          }
+#endif
          return _WriteData.Count > 0;
       }
       /// <summary>

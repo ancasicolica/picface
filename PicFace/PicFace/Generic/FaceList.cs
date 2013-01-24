@@ -25,7 +25,6 @@
 */
 /************************************************************************************/
 using System.Collections.Generic;
-using PicFace.Picasa;
 
 namespace PicFace.Generic
 {
@@ -41,17 +40,7 @@ namespace PicFace.Generic
       {
         
       }
-      /// <summary>
-      /// Constructor for picasa faces
-      /// </summary>
-      /// <param name="faces">Faces found from picasa</param>
-      public FaceList(PicasaFaceList faces)
-      {
-         foreach (Face face in faces)
-         {
-            this.Add(face.Name, face);
-         }
-      }
+
       /// <summary>
       /// Builds a list where all Elements are listed beeing different as in "two" (would be
       /// written into "two")

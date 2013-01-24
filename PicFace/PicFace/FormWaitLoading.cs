@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using PicFace.Generic;
-using PicFace.Picasa;
+
 /************************************************************************************/
 /*
       PicFace - Writes Picasa face information to XMP 
@@ -44,18 +44,12 @@ namespace PicFace
       /// </summary>
       public string Directory { get; private set; }
       /// <summary>
-      /// The contacts
-      /// </summary>
-      public ContactTable Contacts { get; private set; }
-      /// <summary>
       /// Constructor
       /// </summary>
       /// <param name="directory">Directory where the pictures reside</param>
-      /// <param name="contacts"></param>
-      public FormWaitLoading(string directory, ContactTable contacts) : base()
+      public FormWaitLoading(string directory) : base()
       {
          Directory = directory;
-         Contacts = contacts;
       }
       /// <summary>
       /// Loading the form
@@ -81,7 +75,7 @@ namespace PicFace
       /// </summary>
       private void CollectionStarter()
       {
-         Pictures = new PictureList(Directory, Contacts);
+         Pictures = new PictureList(Directory);
          FireTaskFinishedEvent();
       }
    }
