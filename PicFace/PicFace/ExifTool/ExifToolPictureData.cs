@@ -49,32 +49,55 @@
 */
 /************************************************************************************/
 
+using Newtonsoft.Json;
+using PicFace.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using PicFace.Generic;
 
 namespace PicFace.ExifTool
 {
    /// <summary>
-   /// Read out data from Exif Tool
+   /// This class contains all data read out using exiftool. The names of the parameters have to fit
+   /// the names which are retourned by exiftool, otherwise the JSON class can not map them.
    /// </summary>
    internal class ExifToolPictureData
    {
+      /// <summary>
+      /// Name of the source file
+      /// </summary>
       public string SourceFile { get; set; }
+      /// <summary>
+      /// Exif Tool Version, not all versions are compatible with this code!
+      /// </summary>
       public double ExifToolVersion { get; set; }
+      /// <summary>
+      /// Directory where the picture resides
+      /// </summary>
       public string Directory { get; set; }
+      /// <summary>
+      /// A container with all the XMP (Microsoft) face regions
+      /// </summary>
       public RegionInfoMpContainer RegionInfoMp { get; set; }
+      /// <summary>
+      /// A container with all the Picasa face regions
+      /// </summary>
       public RegionInfoContainer RegionInfo { get; set; }
-
+      /// <summary>
+      /// Height of the image, needed to calculate the face rectangles in pixels
+      /// </summary>
+      public int ImageHeight { get; set; }
+      /// <summary>
+      /// Width of the image
+      /// </summary>
+      public int ImageWidth { get; set; }
       /// <summary>
       /// Collects all ExifToolPictureData (raw data) in a path and returns an array with it
       /// </summary>
       /// <param name="path">Path where to collect</param>
-      public static void Collect(string path, PictureInfoList list)
+      public static ExifToolPictureData[] Collect(string path)
       {
 
          // Read General properties using UTF8
@@ -85,7 +108,7 @@ namespace PicFace.ExifTool
          procStartInfo.RedirectStandardError = true;
          procStartInfo.UseShellExecute = false;
          procStartInfo.Arguments = " \"" + path + "\\*.jpg\" -struct -json ";
-         procStartInfo.Arguments += "-SourceFile -Directory -RegionInfo -ExifToolVersion -RegionInfoMP";
+         procStartInfo.Arguments += "-SourceFile -Directory -ImageHeight -ImageWidth -RegionInfo -ExifToolVersion -RegionInfoMP";
          // RegionInfo: this is the information written by tools like Microsoft Photo Gallery
          // RegionInfoMP: this is the picasa information
 
@@ -106,35 +129,8 @@ namespace PicFace.ExifTool
 
          // Deserialise the JSON Data into an array
          ExifToolPictureData[] imageData = JsonConvert.DeserializeObject<ExifToolPictureData[]>(jsonData);
-         if (imageData != null)
-         {
-            // iterate through EACH PICTURE
-            foreach (ExifToolPictureData etp in imageData)
-            {
-               if (etp.RegionInfo != null)
-               {
-                  PictureInfo info = new PictureInfo(etp.SourceFile);
 
-                  // Convert all XMP faces to the internal format and add them to the XMP list
-                  if (etp.RegionInfoMp.Regions != null)
-                  {
-                     foreach (RegionMp region in etp.RegionInfoMp.Regions)
-                     {
-                        info.XmpFaces.Add(region.PersonConvertedName, new Face(region));
-                     }
-                  }
-
-                  // Convert all Picasa faces 
-                  if (etp.RegionInfo.Regions != null)
-                  {
-                     foreach (Region region in etp.RegionInfo.Regions)
-                     {
-                        info.PicasaFaces.Add(region.PersonConvertedName, new Face(region, etp.RegionInfo.AppliedToDimensions));
-                     }
-                  }
-               }
-            }
-         }
+         return imageData;
       }
 
    }

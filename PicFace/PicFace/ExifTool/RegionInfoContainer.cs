@@ -36,7 +36,7 @@ namespace PicFace.ExifTool
       /// <summary>
       /// Regions, array as provided by JSON converter
       /// </summary>     
-      public Region[] Regions { get; set; }
+      public Region[] RegionList { get; set; }
 
       /// <summary>
       /// Constructor

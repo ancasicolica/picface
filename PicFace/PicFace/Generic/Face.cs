@@ -36,7 +36,8 @@ namespace PicFace.Generic
    internal class Face : IComparable
    {
       /// <summary>
-      /// Rectangle where the face is found
+      /// Rectangle where the face is found. This rectangle is defined by relative values
+      /// in the range from 0 to 1. This allows to draw the rectangle on every resized image.
       /// </summary>
       public RectangleF Rect { get; set; }
       /// <summary>

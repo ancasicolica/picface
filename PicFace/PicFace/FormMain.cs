@@ -86,7 +86,7 @@ namespace PicFace
          _CurrentDirectory = @"D:\Users\Christian.CPC\Pictures\Tests";
          textBoxDirectory.Text = _CurrentDirectory;
 
-         ExifToolPictureData.Collect(_CurrentDirectory, new PictureInfoList(_CurrentDirectory));
+         ImageInfoList list = new ImageInfoList(ExifToolPictureData.Collect(_CurrentDirectory));
 
          LoadPictureIndex();
          //// ###############

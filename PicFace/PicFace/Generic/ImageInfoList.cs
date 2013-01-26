@@ -24,43 +24,26 @@
        and/or fitness for purpose. 
 */
 /************************************************************************************/
+using PicFace.ExifTool;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace PicFace.ExifTool
+namespace PicFace.Generic
 {
    /// <summary>
-   /// This is an AREA written in the Picasa Tag "RegionInfo / RegionList"
-   /// 
-   /// The rectangle is defined in a rather special way: X and Y define the center
-   /// of the rectangle, W and H width and heigth
+   /// This list (dictionary) contains all images found in the directory
    /// </summary>
-   public class AreaData
+   internal class ImageInfoList : Dictionary<string, ImageInfo>
    {
-      /// <summary>
-      /// The HEIGHT of the rectangle
-      /// </summary>
-      public float H { get; set; }
-      /// <summary>
-      /// The UNIT, we expect so far only the value "NORMALIZED"
-      /// </summary>
-      public string Unit { get; set; }
-      /// <summary>
-      /// The WIDTH of the rectangle
-      /// </summary>
-      public float W { get; set; }
-      /// <summary>
-      /// The X center point of the rectangle
-      /// </summary>
-      public float X { get; set; }
-      /// <summary>
-      /// The Y center point of the rectangle
-      /// </summary>
-      public float Y { get; set; }
-      /// <summary>
-      /// Constructor
-      /// </summary>
-      public AreaData()
+      public ImageInfoList(ExifToolPictureData[] data)
       {
-
+         foreach (ExifToolPictureData d in data)
+         {
+            this.Add(d.SourceFile, new ImageInfo(d));
+         }
       }
    }
 }

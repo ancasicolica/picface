@@ -40,7 +40,14 @@ namespace PicFace.Generic
       {
         
       }
-
+      /// <summary>
+      /// Override to simplify adding faces
+      /// </summary>
+      /// <param name="face">Face to add</param>
+      public void Add(Face face)
+      {
+         base.Add(face.Name, face);
+      }
       /// <summary>
       /// Builds a list where all Elements are listed beeing different as in "two" (would be
       /// written into "two")

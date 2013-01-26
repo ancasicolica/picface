@@ -121,6 +121,8 @@
     <Compile Include="Framework\WindowProperties.cs" />
     <Compile Include="Generic\Face.cs" />
     <Compile Include="Generic\FaceList.cs" />
+    <Compile Include="Generic\ImageInfo.cs" />
+    <Compile Include="Generic\ImageInfoList.cs" />
     <Compile Include="Generic\PictureComparer.cs" />
     <Compile Include="Generic\PictureInfo.cs" />
     <Compile Include="Generic\PictureInfoList.cs" />

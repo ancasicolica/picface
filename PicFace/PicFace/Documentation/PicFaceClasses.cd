@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="PicFace.ExifTool.ExifPictureInfo" Collapsed="true">
     <Position X="5.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
@@ -10,7 +10,7 @@
   <Class Name="PicFace.ExifTool.ExifToolPictureData" Collapsed="true">
     <Position X="8.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAABAAACAAAgAAAAAAAgAQACAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAABAAACAABgAAAAAAAgAQACAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>ExifTool\ExifToolPictureData.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -137,7 +137,7 @@
   <Class Name="PicFace.Generic.FaceList" Collapsed="true">
     <Position X="13.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\FaceList.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -158,7 +158,7 @@
   <Class Name="PicFace.Generic.PictureInfo" Collapsed="true">
     <Position X="5.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIABAAAAAAAEAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAABAAABAAAEAAAAAQAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Generic\PictureInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
