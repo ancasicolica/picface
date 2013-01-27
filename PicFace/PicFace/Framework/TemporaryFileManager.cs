@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace PicFace.Framework
+namespace Kusti.PicFaceLib.Framework
 {
    /// <summary>
    /// Class handling temporary files: get new name, write them, delete them

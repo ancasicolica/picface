@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicFace", "PicFace\PicFace.csproj", "{ECA125F3-200D-4A8E-B86E-2C9AE5D3C4A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicFaceGui", "PicFaceGui\PicFaceGui.csproj", "{CAE2F5F9-503C-4D47-9E4A-3B619AADFB82}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -17,6 +19,10 @@ Global
 		{ECA125F3-200D-4A8E-B86E-2C9AE5D3C4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECA125F3-200D-4A8E-B86E-2C9AE5D3C4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECA125F3-200D-4A8E-B86E-2C9AE5D3C4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAE2F5F9-503C-4D47-9E4A-3B619AADFB82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAE2F5F9-503C-4D47-9E4A-3B619AADFB82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAE2F5F9-503C-4D47-9E4A-3B619AADFB82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAE2F5F9-503C-4D47-9E4A-3B619AADFB82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

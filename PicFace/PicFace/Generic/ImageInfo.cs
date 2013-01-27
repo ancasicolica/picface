@@ -24,11 +24,13 @@
        and/or fitness for purpose. 
 */
 /************************************************************************************/
-using PicFace.ExifTool;
+using Kusti.PicFaceLib.ExifTool;
 using System;
 using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
-namespace PicFace.Generic
+namespace Kusti.PicFaceLib.Generic
 {
    /// <summary>
    /// This class contains all information about an image. It is the successor of PictureInfo which is not used
@@ -137,6 +139,28 @@ namespace PicFace.Generic
                Face f = new Face(region.PersonConvertedName, new RectangleF(x, y, w, h));
                _PicasaFaces.Add(f);
             }
+         }
+      }
+      /// <summary>
+      /// The ToString override returns simply the name of the file
+      /// </summary>
+      /// <returns></returns>
+      public override string ToString()
+      {
+         return Path.GetFileName(this.FileName);
+      }
+      /// <summary>
+      /// Mark the faces on the picture box
+      /// </summary>
+      /// <param name="picturebox"></param>
+      public void MarkFaces(PictureBox picturebox)
+      {
+         FaceToPictureBox fpb = new FaceToPictureBox(picturebox);
+
+         Pen p = new Pen(Color.Red, 2);
+         foreach (Face f in _PicasaFaces.Values)
+         {
+            fpb.DrawFace(f);
          }
       }
    }

@@ -26,9 +26,9 @@
 /************************************************************************************/
 using System.Drawing;
 using System.Windows.Forms;
-using PicFace.Generic;
+using Kusti.PicFaceLib.Generic;
 
-namespace PicFace
+namespace Kusti.PicFaceLib
 {
    /// <summary>
    /// This class does everything to mark a file on a picture box
@@ -45,6 +45,7 @@ namespace PicFace
       /// <summary>
       /// File name (including path)
       /// </summary>
+      [System.Obsolete("This property will be removed")]
       public string FileName
       {
          get
@@ -53,23 +54,7 @@ namespace PicFace
          }
          set
          {
-            try
-            {
-               if (_Image != null)
-               {
-                  _Image.Dispose();
-               }
-               if (_Graphics != null)
-               {
-                  _Graphics.Dispose();
-               }
-            }
-            catch
-            { }
-            _FileName = value;
-            _Image = Image.FromFile(_FileName);
-            _PictureBox.Image = _Image;
-            _Graphics = Graphics.FromImage(_Image);
+            // not used anymore
          }
       }
       /// <summary>
@@ -80,6 +65,8 @@ namespace PicFace
       {
          _PictureBox = pictureBox;
          _RectanglePen = new Pen(Color.Red, 5);
+
+         _Image = pictureBox.Image;
       }
       /// <summary>
       /// Draw the face

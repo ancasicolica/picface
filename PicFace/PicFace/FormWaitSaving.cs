@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PicFace.Generic;
+using Kusti.PicFaceLib.Generic;
 using System.Threading;
 
 namespace PicFace

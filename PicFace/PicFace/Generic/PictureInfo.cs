@@ -26,7 +26,7 @@
 /************************************************************************************/
 using System.IO;
 
-namespace PicFace.Generic
+namespace Kusti.PicFaceLib.Generic
 {
    /// <summary>
    /// Picture Information

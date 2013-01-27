@@ -1,4 +1,4 @@
-﻿using PicFace.ExifTool;
+﻿using Kusti.PicFaceLib.ExifTool;
 /************************************************************************************/
 /*
       PicFace - Writes Picasa face information to XMP 
@@ -28,7 +28,7 @@
 using System;
 using System.Drawing;
 
-namespace PicFace.Generic
+namespace Kusti.PicFaceLib.Generic
 {
    /// <summary>
    /// This class is defining a face: a name belongig to it and where it is found

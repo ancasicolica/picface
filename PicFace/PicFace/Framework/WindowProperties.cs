@@ -28,7 +28,7 @@ using Microsoft.Win32;
        and/or fitness for purpose. 
 */
 /************************************************************************************/
-namespace PicFace.Framework
+namespace Kusti.PicFaceLib.Framework
 {
    /// <summary>
    /// This class saves the properties of the Sim-Windows in the registry

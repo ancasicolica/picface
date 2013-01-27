@@ -27,9 +27,9 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using PicFace.Generic;
+using Kusti.PicFaceLib.Generic;
 
-namespace PicFace.ExifTool
+namespace Kusti.PicFaceLib.ExifTool
 {
    /// <summary>
    /// Picture Info read out from Exif Tool

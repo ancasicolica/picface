@@ -24,7 +24,7 @@
        and/or fitness for purpose. 
 */
 /************************************************************************************/
-namespace PicFace.ExifTool
+namespace Kusti.PicFaceLib.ExifTool
 {
    /// <summary>
    /// This are the dimensions of the image used for the Picasa tag "RegionInfo / AppliedToDimensions"

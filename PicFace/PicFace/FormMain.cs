@@ -29,9 +29,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using PicFace.Generic;
-using PicFace.Framework;
-using PicFace.ExifTool;
+using Kusti.PicFaceLib.Generic;
+using Kusti.PicFaceLib.Framework;
+using Kusti.PicFaceLib.ExifTool;
+using Kusti.PicFaceLib;
 
 namespace PicFace
 {

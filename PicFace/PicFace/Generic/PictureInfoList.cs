@@ -26,7 +26,7 @@
 /************************************************************************************/
 using System.Collections.Generic;
 
-namespace PicFace.Generic
+namespace Kusti.PicFaceLib.Generic
 {
    /// <summary>
    /// Base Class for all PictureInfo Lists

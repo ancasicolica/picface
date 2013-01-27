@@ -27,7 +27,7 @@
 using System;
 using System.Text;
 
-namespace PicFace.ExifTool
+namespace Kusti.PicFaceLib.ExifTool
 {
    /// <summary>
    /// Region for a person information (XMP). Naming after Exif Tool terms (JSON Format)

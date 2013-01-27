@@ -24,21 +24,37 @@
        and/or fitness for purpose. 
 */
 /************************************************************************************/
-using PicFace.ExifTool;
+using Kusti.PicFaceLib.ExifTool;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PicFace.Generic
+namespace Kusti.PicFaceLib.Generic
 {
    /// <summary>
    /// This list (dictionary) contains all images found in the directory
    /// </summary>
-   internal class ImageInfoList : Dictionary<string, ImageInfo>
+   public class ImageInfoList : Dictionary<string, ImageInfo>
    {
-      public ImageInfoList(ExifToolPictureData[] data)
+      /// <summary>
+      /// Public constructor, load the list out of a directory
+      /// </summary>
+      /// <param name="directory">Directory</param>
+      public ImageInfoList(string directory)
+      {
+         ExifToolPictureData[] data = ExifToolPictureData.Collect(directory);
+         foreach (ExifToolPictureData d in data)
+         {
+            this.Add(d.SourceFile, new ImageInfo(d));
+         }
+      }
+      /// <summary>
+      /// Internal constructor
+      /// </summary>
+      /// <param name="data">Data read out of the exiftool</param>
+      internal ImageInfoList(ExifToolPictureData[] data)
       {
          foreach (ExifToolPictureData d in data)
          {

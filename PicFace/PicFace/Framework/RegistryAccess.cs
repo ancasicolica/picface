@@ -25,7 +25,7 @@
        and/or fitness for purpose. 
 */
 /************************************************************************************/
-namespace PicFace.Framework
+namespace Kusti.PicFaceLib.Framework
 {
    /// <summary>
    /// Class providing registry access

@@ -50,14 +50,14 @@
 /************************************************************************************/
 
 using Newtonsoft.Json;
-using PicFace.Generic;
+using Kusti.PicFaceLib.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace PicFace.ExifTool
+namespace Kusti.PicFaceLib.ExifTool
 {
    /// <summary>
    /// This class contains all data read out using exiftool. The names of the parameters have to fit

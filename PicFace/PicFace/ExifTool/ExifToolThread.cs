@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using PicFace.Framework;
+using Kusti.PicFaceLib.Framework;
 /************************************************************************************/
 /*
       PicFace - Writes Picasa face information to XMP 
@@ -31,7 +31,7 @@ using PicFace.Framework;
 */
 /************************************************************************************/
 
-namespace PicFace.ExifTool
+namespace Kusti.PicFaceLib.ExifTool
 {
    #region FinishedEventArgs
    /// <summary>

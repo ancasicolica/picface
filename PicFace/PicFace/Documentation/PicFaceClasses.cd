@@ -1,132 +1,132 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="PicFace.ExifTool.ExifPictureInfo" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.ExifTool.ExifPictureInfo" Collapsed="true">
     <Position X="5.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ExifTool\ExifPictureInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.ExifTool.ExifToolPictureData" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.ExifTool.ExifToolPictureData" Collapsed="true">
     <Position X="8.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAAACAABgAAAAAAAgAQACAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>ExifTool\ExifToolPictureData.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.ExifTool.FinishedEventArgs" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.ExifTool.FinishedEventArgs" Collapsed="true">
     <Position X="8.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ExifTool\ExifToolThread.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.ExifTool.ExifToolThread" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.ExifTool.ExifToolThread" Collapsed="true">
     <Position X="10" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAAAAAACAAQAAAQAQAAAAACAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>ExifTool\ExifToolThread.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.ExifTool.Region" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.ExifTool.Region" Collapsed="true">
     <Position X="10" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAEAAAAAAQAAAAAAAAAAQAAAQAAAAA=</HashCode>
       <FileName>ExifTool\Region.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.ExifTool.RegionInfoContainer" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.ExifTool.RegionInfoContainer" Collapsed="true">
     <Position X="11.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>ExifTool\RegionInfoContainer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.FaceToPictureBox" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.FaceToPictureBox" Collapsed="true">
     <Position X="15.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAABAAAAAAABAAAAAAAAAAQAAAAAAMBAAAA=</HashCode>
       <FileName>FaceToPictureBox.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.FormAboutPicface" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.FormAboutPicface" Collapsed="true">
     <Position X="10" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>kIAAEAgAACAgCAUAAACAAAADAAAAEIIAAAAAAAAAAAA=</HashCode>
-      <FileName>FormAboutPicface.cs</FileName>
+      <FileName>FormAboutKusti.PicFaceLib.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.FormMain" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.FormMain" Collapsed="true">
     <Position X="11.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BQCJwICCQCkgmLQCAEmAAAmCJAEBAMsQQCIAAYBBAAM=</HashCode>
       <FileName>FormMain.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.FormStartup" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.FormStartup" Collapsed="true">
     <Position X="13.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAASAAABAIAASABAACAAAAAAAAESAAAABAAAA=</HashCode>
       <FileName>FormStartup.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.FormWait" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.FormWait" Collapsed="true">
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAAAQQACAAAAAEAACAAAACABACAAAAAAAAAQAAAAA=</HashCode>
       <FileName>FormWait.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.FormWaitLoading" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.FormWaitLoading" Collapsed="true">
     <Position X="2.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACQAABAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>FormWaitLoading.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.FormWaitSaving" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.FormWaitSaving" Collapsed="true">
     <Position X="5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACQAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAECAA=</HashCode>
       <FileName>FormWaitSaving.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.PicFaceConfig" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.PicFaceConfig" Collapsed="true">
     <Position X="11.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAQAAAAAAAAAAAgAAAAAAAAAAAAYAAAAAAAAAAA=</HashCode>
       <FileName>PicFaceConfig.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Program" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Program" Collapsed="true">
     <Position X="8.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Framework.RegistryAccess" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Framework.RegistryAccess" Collapsed="true">
     <Position X="13.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAAAAAAAAAAAAAgAAAAAARIAAAAAAEAAAA=</HashCode>
       <FileName>Framework\RegistryAccess.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Framework.TemporaryFileManager" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Framework.TemporaryFileManager" Collapsed="true">
     <Position X="10" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAAAAAEAAQAA=</HashCode>
       <FileName>Framework\TemporaryFileManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Framework.WindowProperties" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Framework.WindowProperties" Collapsed="true">
     <Position X="11.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAAgAAAABIAAAAAAAgAAAAIAAgEAAAAAAA=</HashCode>
       <FileName>Framework\WindowProperties.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Generic.Face" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="Kusti.PicFaceLib.Generic.Face" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="11.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAiAAAAAAAAAAAAAAAAA=</HashCode>
@@ -134,69 +134,69 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="PicFace.Generic.FaceList" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Generic.FaceList" Collapsed="true">
     <Position X="13.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\FaceList.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Generic.OnSavedEventArgs" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Generic.OnSavedEventArgs" Collapsed="true">
     <Position X="10" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\PictureComparer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Generic.PictureComparer" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Generic.PictureComparer" Collapsed="true">
     <Position X="13.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAKABAAAAAACGACAIEgABQAAhAGAAAAAEhABAAEA=</HashCode>
       <FileName>Generic\PictureComparer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Generic.PictureInfo" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Generic.PictureInfo" Collapsed="true">
     <Position X="5.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAABAAAEAAAAAQAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Generic\PictureInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Generic.PictureInfoList" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Generic.PictureInfoList" Collapsed="true">
     <Position X="2.75" Y="3.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
       <FileName>Generic\PictureInfoList.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Generic.OnPictureListSavedEventArgs" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Generic.OnPictureListSavedEventArgs" Collapsed="true">
     <Position X="15.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generic\PictureList.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Generic.OnPictureSavedEventArgs" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Generic.OnPictureSavedEventArgs" Collapsed="true">
     <Position X="8.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Generic\PictureList.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Generic.PictureList" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib.Generic.PictureList" Collapsed="true">
     <Position X="15.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAACABAAAAIAEKAKAAAAAgEAAAAAAAAgQAoAAAA=</HashCode>
       <FileName>Generic\PictureList.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Properties.Resources" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib..Properties.Resources" Collapsed="true">
     <Position X="15.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABUAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="PicFace.Properties.Settings" Collapsed="true">
+  <Class Name="Kusti.PicFaceLib..Properties.Settings" Collapsed="true">
     <Position X="8.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>

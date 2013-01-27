@@ -25,7 +25,7 @@
 */
 /************************************************************************************/
 
-namespace PicFace.ExifTool
+namespace Kusti.PicFaceLib.ExifTool
 {
    /// <summary>
    /// This is an AREA written in the Picasa Tag "RegionInfo / RegionList"

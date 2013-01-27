@@ -25,7 +25,7 @@
 */
 /************************************************************************************/
 
-namespace PicFace.ExifTool
+namespace Kusti.PicFaceLib.ExifTool
 {
    /// <summary>
    /// RegionInfo Container, needed by JSON format

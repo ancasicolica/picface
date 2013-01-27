@@ -26,10 +26,10 @@
 /************************************************************************************/
 using System;
 using System.Collections.Generic;
-using PicFace.ExifTool;
+using Kusti.PicFaceLib.ExifTool;
 using System.Diagnostics;
 
-namespace PicFace.Generic
+namespace Kusti.PicFaceLib.Generic
 {
    #region OnPictureListSavedEventArgs
    /// <summary>

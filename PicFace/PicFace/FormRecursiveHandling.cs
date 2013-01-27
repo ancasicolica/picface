@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using PicFace.Generic;
-using PicFace.Framework;
+using Kusti.PicFaceLib.Generic;
+using Kusti.PicFaceLib.Framework;
 
 namespace PicFace
 {

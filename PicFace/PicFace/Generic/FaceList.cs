@@ -26,7 +26,7 @@
 /************************************************************************************/
 using System.Collections.Generic;
 
-namespace PicFace.Generic
+namespace Kusti.PicFaceLib.Generic
 {
    /// <summary>
    /// A Dictionary for faces. The Key is the name

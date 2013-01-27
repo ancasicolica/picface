@@ -28,10 +28,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using PicFace.ExifTool;
+using Kusti.PicFaceLib.ExifTool;
 using System.Threading;
 
-namespace PicFace.Generic
+namespace Kusti.PicFaceLib.Generic
 {
    #region OnSavedEventArgs
    /// <summary>

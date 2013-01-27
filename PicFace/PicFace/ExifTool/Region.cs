@@ -27,7 +27,7 @@
 using System;
 using System.Text;
 
-namespace PicFace.ExifTool
+namespace Kusti.PicFaceLib.ExifTool
 {
    /// <summary>
    /// Region for a person information (Picasa). Naming after Exif Tool terms (JSON Format)
@@ -51,7 +51,10 @@ namespace PicFace.ExifTool
       /// <summary>
       /// Rectangle read from JSON
       /// </summary>
-      public PicFace.ExifTool.AreaData Area { get; set; }
+      public ExifTool.AreaData Area { get; set; }
+      /// <summary>
+      /// Type read out
+      /// </summary>
       public string Type { get; set; }
       /// <summary>
       /// Region

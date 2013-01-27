@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PicFace.Framework;
+using Kusti.PicFaceLib.Framework;
 /************************************************************************************/
 /*
       PicFace - Writes Picasa face information to XMP 
