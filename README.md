@@ -12,7 +12,25 @@ I stopped the development in lack of time. The tool remains available "as it is"
 PicFace is written in C# and .NET 3.5 (Visual Studio 2008)
 
 ##Licence
-You are free to to with the code whatever you want to. 
+    LICENSE TERMS
+
+       The redistribution and use of this software (with or without changes)
+       is allowed without the payment of fees or royalties provided that:
+
+        1. source code distributions include the above copyright notice, this
+           list of conditions and the following disclaimer; 
+
+        2. binary distributions include the above copyright notice, this list
+           of conditions and the following disclaimer in their documentation;
+
+        3. the name of the copyright holder is not used to endorse products
+           built using this software without specific written permission.
+
+       DISCLAIMER
+
+       This software is provided 'as is' with no explicit or implied warranties
+       in respect of its properties, including, but not limited to, correctness
+       and/or fitness for purpose. 
 
 ##3rd party code
 There are two parts of the tool not programmed by myself:
