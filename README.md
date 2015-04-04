@@ -1,7 +1,7 @@
 If you use the face feature in Picasa, all your information is stored in the .picasa.ini file - not in your picture.
 This tool reads the .picasa.ini file and writes the data into your picture using XMP.
 
-Naming a baby is always a dificult thing and there is (nearly) no difference in giving a new tool a name. So I decided to concatenate "Pic" (for Picasa or Picture if you like) and "Face" for this purpose. And because it sounds a bit like the front of a little lovely animal, the icon was defined too ;-
+Naming a baby is always a dificult thing and there is (nearly) no difference in giving a new tool a name. So I decided to concatenate "Pic" (for Picasa or Picture if you like) and "Face" for this purpose. And because it sounds a bit like the front of a little lovely animal, the icon was defined too ;-)
 
 The code was previously hosted in Google Code. As this service is shutting down, and I have some downloads over the time, I decided to 
 move the code to GitHub even I have no plans to work on it.
