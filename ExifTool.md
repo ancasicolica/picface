@@ -1,0 +1,1 @@
+On this page details about the usage of ExifTool (arguments) will follow.
